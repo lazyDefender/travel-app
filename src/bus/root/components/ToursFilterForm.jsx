@@ -68,128 +68,127 @@ const ToursFilterForm = () => {
   const res = useCities()
 
     return (
-      <GoogleMap/>
-  //       <Formik
-  //   initialValues={{
-  //     fromCity: 'none',
-  //     toCity: 'none',
-  //     datetime: new Date(),
-  //     duration: '',
-  //     adultsCount: '',
-  //     kidsCount: '',
-  //   }}
-  //   validate={(values) => {
-  //     const errors = {};
-  //     return errors;
-  //   }}
-  //   onSubmit={(values, {setSubmitting}) => {
-  //     setTimeout(() => {
-  //       setSubmitting(false);
-  //       alert(JSON.stringify(values, null, 2));
-  //     }, 500);
-  //   }}
-  // >
-  //   {({submitForm, isSubmitting, touched, errors}) => (
-  //     <MuiPickersUtilsProvider utils={MomentUtils}>
-  //       <Form>
-  //       <Box margin={1}>
-  //           <Field
-  //             component={TextField}
-  //             type="text"
-  //             name="fromCity"
-  //             label="Звідки"
-  //             select
-  //             variant="standard"
-  //             margin="normal"
-  //             InputLabelProps={{
-  //               shrink: true,
-  //             }}
-  //           >
-  //             {ranges.map((option) => (
-  //               <MenuItem key={option.value} value={option.value}>
-  //                 {option.label}
-  //               </MenuItem>
-  //             ))}
-  //           </Field>
-  //         </Box>
-  //         {isSubmitting && <LinearProgress />}
+        <Formik
+    initialValues={{
+      fromCity: 'none',
+      toCity: 'none',
+      datetime: new Date(),
+      duration: '',
+      adultsCount: '',
+      kidsCount: '',
+    }}
+    validate={(values) => {
+      const errors = {};
+      return errors;
+    }}
+    onSubmit={(values, {setSubmitting}) => {
+      setTimeout(() => {
+        setSubmitting(false);
+        alert(JSON.stringify(values, null, 2));
+      }, 500);
+    }}
+  >
+    {({submitForm, isSubmitting, touched, errors}) => (
+      <MuiPickersUtilsProvider utils={MomentUtils}>
+        <Form>
+        <Box margin={1}>
+            <Field
+              component={TextField}
+              type="text"
+              name="fromCity"
+              label="Звідки"
+              select
+              variant="standard"
+              margin="normal"
+              InputLabelProps={{
+                shrink: true,
+              }}
+            >
+              {ranges.map((option) => (
+                <MenuItem key={option.value} value={option.value}>
+                  {option.label}
+                </MenuItem>
+              ))}
+            </Field>
+          </Box>
+          {isSubmitting && <LinearProgress />}
           
           
-  //         <Box margin={1}>
-  //           <Field
-  //             component={TextField}
-  //             type="text"
-  //             name="toCity"
-  //             label="Куди"
-  //             select
-  //             variant="standard"
-  //             margin="normal"
-  //             InputLabelProps={{
-  //               shrink: true,
-  //             }}
-  //           >
-  //             <ListSubheader>Italy</ListSubheader>
-  //             {ranges.map((option) => (
-  //               <MenuItem key={option.value} value={option.value}>
-  //                 {option.label}
-  //               </MenuItem>
-  //             ))}
-  //           </Field>
-  //         </Box>
-  //         <Box margin={1}>
-  //           <Field component={DatePicker} name="datetime" label="Початок туру" />
-  //         </Box>
-  //         <Box margin={1}>
-  //           <Field
-  //             component={TextField}
-  //             type="text"
-  //             name="duration"
-  //             label="Тривалість туру"
-  //             select
-  //             variant="standard"
-  //             margin="normal"
-  //             InputLabelProps={{
-  //               shrink: true,
-  //             }}
-  //           >
+          <Box margin={1}>
+            <Field
+              component={TextField}
+              type="text"
+              name="toCity"
+              label="Куди"
+              select
+              variant="standard"
+              margin="normal"
+              InputLabelProps={{
+                shrink: true,
+              }}
+            >
+              <ListSubheader>Italy</ListSubheader>
+              {ranges.map((option) => (
+                <MenuItem key={option.value} value={option.value}>
+                  {option.label}
+                </MenuItem>
+              ))}
+            </Field>
+          </Box>
+          <Box margin={1}>
+            <Field component={DatePicker} name="datetime" label="Початок туру" />
+          </Box>
+          <Box margin={1}>
+            <Field
+              component={TextField}
+              type="text"
+              name="duration"
+              label="Тривалість туру"
+              select
+              variant="standard"
+              margin="normal"
+              InputLabelProps={{
+                shrink: true,
+              }}
+            >
               
-  //             {ranges.map((option) => (
-  //               <MenuItem key={option.value} value={option.value}>
-  //                 {option.label}
-  //               </MenuItem>
-  //             ))}
-  //           </Field>
-  //         </Box>
-  //         <Box margin={1}>
-  //           <Field
-  //             component={TextField}
-  //             name="adultsCount"
-  //             type="number"
-  //             label="Adults"
-  //           />
-  //         </Box>
-  //         <Box margin={1}>
-  //           <Field
-  //             component={TextField}
-  //             name="kidsCount"
-  //             type="number"
-  //             label="Kids"
-  //           />
-  //         </Box>
-  //         <Box margin={1}>
-  //           <Button
-  //             variant="contained"
-  //             color="primary"
-  //             disabled={isSubmitting}
-  //             onClick={submitForm}
-  //           >
-  //             Submit
-  //           </Button>
-  //         </Box>
-  //       </Form>
-  //     </MuiPickersUtilsProvider>
-  //   )}
-  // </Formik>
+              {ranges.map((option) => (
+                <MenuItem key={option.value} value={option.value}>
+                  {option.label}
+                </MenuItem>
+              ))}
+            </Field>
+          </Box>
+          <Box margin={1}>
+            <Field
+              component={TextField}
+              name="adultsCount"
+              type="number"
+              label="Adults"
+            />
+          </Box>
+          <Box margin={1}>
+            <Field
+              component={TextField}
+              name="kidsCount"
+              type="number"
+              label="Kids"
+            />
+          </Box>
+          <Box margin={1}>
+            <Button
+              variant="contained"
+              color="primary"
+              disabled={isSubmitting}
+              onClick={submitForm}
+            >
+              Submit
+            </Button>
+          </Box>
+        </Form>
+      </MuiPickersUtilsProvider>
+    )}
+  </Formik>
     )
 }
 
