@@ -1,0 +1,153 @@
+[
+    {
+       "continent": "Азія",
+       "country": "Туреччина",
+       "hotelsCount": 0,
+       "isFrom": false,
+       "name": "Анталія"
+    },
+    {
+        "continent": "Азія",
+        "country": "Туреччина",
+        "hotelsCount": 0,
+        "isFrom": false,
+        "name": "Анталія"
+     },
+     {
+        "continent": "Азія",
+        "country": "Туреччина",
+        "hotelsCount": 0,
+        "isFrom": false,
+        "name": "Сіде"
+     },
+     {
+        "continent": "Африка",
+        "country": "Танзанія",
+        "hotelsCount": 0,
+        "isFrom": false,
+        "name": "Занзібар"
+     },
+     {
+        "continent": "Азія",
+        "country": "ОАЕ",
+        "hotelsCount": 0,
+        "isFrom": false,
+        "name": "Дубай"
+     },
+     {
+        "continent": "Азія",
+        "country": "ОАЕ",
+        "hotelsCount": 0,
+        "isFrom": false,
+        "name": "Шарджа"
+     },
+     {
+        "continent": "Азія",
+        "country": "ОАЕ",
+        "hotelsCount": 0,
+        "isFrom": false,
+        "name": "Рас Аль-Хайма"
+     },
+     {
+      "continent": "Азія",
+      "country": "Мальдіви",
+      "hotelsCount": 0,
+      "isFrom": false,
+      "name": "Північний Мале Атол"
+      },
+      {
+         "continent": "Азія",
+         "country": "Мальдіви",
+         "hotelsCount": 0,
+         "isFrom": false,
+         "name": "Арі Атол"
+      },
+      {
+         "continent": "Азія",
+         "country": "Мальдіви",
+         "hotelsCount": 0,
+         "isFrom": false,
+         "name": "Мале"
+      },
+      {
+         "continent": "Азія",
+         "country": "Мальдіви",
+         "hotelsCount": 0,
+         "isFrom": false,
+         "name": "Південний Мале Атол"
+      },
+      {
+         "continent": "Азія",
+         "country": "Мальдіви",
+         "hotelsCount": 0,
+         "isFrom": false,
+         "name": "Баа Атол"
+      },
+      {
+         "continent": "Азія",
+         "country": "Мальдіви",
+         "hotelsCount": 0,
+         "isFrom": false,
+         "name": "Гаафу Аліфу Атол"
+      },
+
+      {
+         "continent": "Африка",
+         "country": "Єгипет",
+         "hotelsCount": 0,
+         "isFrom": false,
+         "name": "Шарм-ель-Шейх"
+      },
+
+      {
+         "continent": "Північна Америка",
+         "country": "Домініканська Республіка",
+         "hotelsCount": 0,
+         "isFrom": false,
+         "name": "Пунта Кана"
+      },
+      {
+         "continent": "Північна Америка",
+         "country": "Домініканська Республіка",
+         "hotelsCount": 0,
+         "isFrom": false,
+         "name": "Баяібе"
+      },
+      {
+         "continent": "Північна Америка",
+         "country": "Домініканська Республіка",
+         "hotelsCount": 0,
+         "isFrom": false,
+         "name": "Уверо-Альто"
+      },
+      
+
+      {
+         "continent": "Європа",
+         "country": "Україна",
+         "hotelsCount": 0,
+         "isFrom": true,
+         "name": "Львів"
+      },
+      {
+         "continent": "Європа",
+         "country": "Україна",
+         "hotelsCount": 0,
+         "isFrom": true,
+         "name": "Харків"
+      },
+      {
+         "continent": "Європа",
+         "country": "Україна",
+         "hotelsCount": 0,
+         "isFrom": true,
+         "name": "Одеса"
+      },
+      {
+         "continent": "Європа",
+         "country": "Україна",
+         "hotelsCount": 0,
+         "isFrom": true,
+         "name": "Запоріжжя"
+      }
+]
