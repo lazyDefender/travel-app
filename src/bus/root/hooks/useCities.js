@@ -9,6 +9,8 @@ const useCities = () => {
     useEffect(() => {
         dispatch(citiesActions.fetchAsync())
     }, [dispatch])
+    const cities = useSelector(state => state.cities)
+    return cities
 }
 
 export default useCities

@@ -39,6 +39,9 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 
 import useCities from '../hooks/useCities' 
 import GoogleMap from './GoogleMap';
+import useToursFilter from '../hooks/useToursFilter';
+import { store } from '../../../init/store'
+import { toursActions } from '../../../redux/tours/actions'
 
 const ranges = [
     {
@@ -65,13 +68,26 @@ const ranges = [
 
 const ToursFilterForm = () => {
 
-  const res = useCities()
+  const citiesRes = useCities()
+  const cities = citiesRes.data
+  const countries = new Set(cities?.map(city => city.country))
+  const countriesTo = []
+  const daysCounts = new Array(19).fill(0).map((_, i) => i).map(n => n + 3)
+  console.log('counts', daysCounts)
+
+  for(let country of countries) {
+    const citiesByCountry = cities.filter(city => city.country === country)
+    countriesTo.push({
+      country,
+      cities: citiesByCountry,
+    })
+  }
 
     return (
         <Formik
     initialValues={{
-      fromCity: 'none',
-      toCity: 'none',
+      fromCity: '',
+      toCity: '',
       datetime: new Date(),
       duration: '',
       adultsCount: '',
@@ -86,6 +102,7 @@ const ToursFilterForm = () => {
         setSubmitting(false);
         alert(JSON.stringify(values, null, 2));
       }, 500);
+      store.dispatch(toursActions.fetchAsync(values))
     }}
   >
     {({submitForm, isSubmitting, touched, errors}) => (
@@ -104,9 +121,9 @@ const ToursFilterForm = () => {
                 shrink: true,
               }}
             >
-              {ranges.map((option) => (
-                <MenuItem key={option.value} value={option.value}>
-                  {option.label}
+              {cities?.filter(city => city.isFrom === true).map((city) => (
+                <MenuItem key={city.id} value={city.id}>
+                  {city.name}
                 </MenuItem>
               ))}
             </Field>
@@ -127,16 +144,24 @@ const ToursFilterForm = () => {
                 shrink: true,
               }}
             >
-              <ListSubheader>Italy</ListSubheader>
-              {ranges.map((option) => (
-                <MenuItem key={option.value} value={option.value}>
-                  {option.label}
+              {/* {countriesTo?.map(country => {
+                const headerJSX = <ListSubheader>{country.country}</ListSubheader>
+                const citiesJSX = country.cities.map(city => <MenuItem key={city.id} value={city.name}>{city.name}</MenuItem>)
+                return <>
+                  {headerJSX}
+                  {citiesJSX}
+                </>
+                
+              })} */}
+              {cities?.map((city) => (
+                <MenuItem key={city.id} value={city.id}>
+                  {city.name}
                 </MenuItem>
               ))}
             </Field>
           </Box>
           <Box margin={1}>
-            <Field component={DatePicker} name="datetime" label="Початок туру" />
+            <Field component={DatePicker} disablePast={true} name="datetime" label="Початок туру" />
           </Box>
           <Box margin={1}>
             <Field
@@ -152,9 +177,9 @@ const ToursFilterForm = () => {
               }}
             >
               
-              {ranges.map((option) => (
-                <MenuItem key={option.value} value={option.value}>
-                  {option.label}
+              {daysCounts.map((c) => (
+                <MenuItem key={c} value={c}>
+                  {c}
                 </MenuItem>
               ))}
             </Field>
