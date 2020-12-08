@@ -37,7 +37,6 @@ export const toursActions = Object.freeze({
     },
 
     //Async
-
     fetchAsync: (filters) => async (dispatch) => {
         const {
             fromCity,

@@ -39,9 +39,9 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 
 import useCities from '../hooks/useCities' 
 import GoogleMap from './GoogleMap';
-import useToursFilter from '../hooks/useToursFilter';
 import { store } from '../../../init/store'
 import { toursActions } from '../../../redux/tours/actions'
+import { Link } from 'react-router-dom';
 
 const ranges = [
     {
@@ -73,7 +73,6 @@ const ToursFilterForm = () => {
   const countries = new Set(cities?.map(city => city.country))
   const countriesTo = []
   const daysCounts = new Array(19).fill(0).map((_, i) => i).map(n => n + 3)
-  console.log('counts', daysCounts)
 
   for(let country of countries) {
     const citiesByCountry = cities.filter(city => city.country === country)
@@ -84,6 +83,7 @@ const ToursFilterForm = () => {
   }
 
     return (
+      <>
         <Formik
     initialValues={{
       fromCity: '',
@@ -214,6 +214,7 @@ const ToursFilterForm = () => {
       </MuiPickersUtilsProvider>
     )}
   </Formik>
+  </>
     )
 }
 
