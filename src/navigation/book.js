@@ -4,4 +4,5 @@ export const book = Object.freeze({
     login: '/login',
     hotelsById: '/hotels/:id',
     hotels: '/hotels',
+    reservation: '/reservation',
 })

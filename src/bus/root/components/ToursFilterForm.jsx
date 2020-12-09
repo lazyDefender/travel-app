@@ -39,31 +39,8 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 
 import useCities from '../hooks/useCities' 
 import { store } from '../../../init/store'
-import { toursActions } from '../../../redux/tours/actions'
+import { toursFilterActions } from '../../../redux/toursFilter/actions'
 import { Link } from 'react-router-dom';
-
-const ranges = [
-    {
-      value: 'Київ',
-      label: 'Київ',
-    },
-    {
-      value: 'Львів',
-      label: 'Львів',
-    },
-    {
-      value: 'Харків',
-      label: 'Харків',
-    },
-    {
-      value: 'Одеса',
-      label: 'Одеса',
-    },
-    {
-      value: 'Запоріжжя',
-      label: 'Запоріжжя',
-    },
-  ];
 
 const ToursFilterForm = () => {
 
@@ -101,7 +78,7 @@ const ToursFilterForm = () => {
         setSubmitting(false);
         // alert(JSON.stringify(values, null, 2));
       }, 500);
-      store.dispatch(toursActions.fetchAsync(values))
+      store.dispatch(toursFilterActions.fetchAsync(values))
     }}
   >
     {({submitForm, isSubmitting, touched, errors}) => (

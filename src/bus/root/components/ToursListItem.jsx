@@ -24,7 +24,7 @@ const ToursListItem = ({hotel, adultPrice, kidPrice}) => {
   const classes = useStyles();
 
   const { photos, rating, id } = hotel
-  const photoRef = photos[0].photo_reference
+  const photoRef = photos ? photos[0].photo_reference : ''
   const finalPhotoSrc = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${photoRef}&key=${process.env.REACT_APP_API_KEY}`
   return (
     <Link to={`${book.hotels}/${id}`}>
