@@ -12,6 +12,7 @@ import Rating from '@material-ui/lab/Rating'
 
 import useHotel from '../hooks/useHotel'
 
+
 const HotelMain = ({id}) => {
     const hotel = useHotel(id)
     const {
@@ -49,14 +50,6 @@ const HotelMain = ({id}) => {
                     disabled
                 />
             </CardActionArea>
-            <CardActions>
-                <Button size="small" color="primary">
-                Share
-                </Button>
-                <Button size="small" color="primary">
-                Learn More
-                </Button>
-            </CardActions>
         </Card>
     )
 }

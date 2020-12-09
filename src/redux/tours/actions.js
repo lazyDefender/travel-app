@@ -7,6 +7,7 @@ import { types } from './types';
 import fire from '../../firebase'
 import moment from 'moment';
 import { getPlace } from '../../global/getPlace';
+import { hotelActions } from '../hotels/actions';
 
 export const toursActions = Object.freeze({
     //Sync
@@ -177,8 +178,39 @@ export const toursActions = Object.freeze({
 
         // console.log('finalToursWithHotels', finalToursWithHotels)
 
-        
         dispatch(toursActions.fill(finalToursWithHotels))
         dispatch(toursActions.stopFetching())
+    },
+    fetchByHotel: (id) => async (dispatch) => {
+        dispatch(toursActions.startFetching())
+        const hotel = await fire
+            .firestore()
+            .collection('hotels')
+            .doc(id)
+            .get()
+
+
+        const toursRes = await fire
+            .firestore()
+            .collection('tours')
+            .where('hotel', '==', hotel.ref)
+            .get()
+        
+        
+        const toursDocs = toursRes.docs
+        const tours = []
+        for(const t of toursDocs) {
+            tours.push({
+                id: t.id,
+                ...t.data(),
+            })
+        }
+
+        console.log('tours',tours)
+
+        dispatch(toursActions.fill(tours))
+        dispatch(toursActions.stopFetching())
     }
+
+    
 })
