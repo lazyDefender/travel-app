@@ -42,9 +42,25 @@ import { store } from '../../../init/store'
 import { toursFilterActions } from '../../../redux/toursFilter/actions'
 import useTour from '../hooks/useTour'
 
+const disableBookedDays = (date) => {
+    const bookedDays = store.getState().reservation.data?.bookedDays || []
+    
+    const jsDate = date.toDate() 
+    jsDate.setHours(0)
+    jsDate.setMinutes(0)
+    jsDate.setSeconds(0)
+    jsDate.setMilliseconds(0)
+    console.log('jsDate',jsDate)
+    
+    const jsBookedDays = bookedDays.map(d => d.toDate())
+    console.log('date', jsBookedDays)
+    // console.log(jsBookedDays.includes(jsDate))
+    return jsBookedDays.includes(jsDate)
+}
 
 const ReservationForm = ({tourId}) => {
     const tour = useTour(tourId)
+    
     return (
         <>
           <Formik
@@ -82,6 +98,7 @@ const ReservationForm = ({tourId}) => {
                 InputLabelProps={{
                   shrink: true,
                 }}
+                disabled
               >  
               </Field>
             </Box>
@@ -97,11 +114,18 @@ const ReservationForm = ({tourId}) => {
                 InputLabelProps={{
                   shrink: true,
                 }}
+                disabled
               >  
               </Field>
             </Box>
             <Box margin={1}>
-              <Field component={DatePicker} disablePast={true} name="datetime" label="Початок туру" />
+                <Field 
+                    component={DatePicker} 
+                    disablePast={true} 
+                    name="datetime" 
+                    label="Початок туру" 
+                    shouldDisableDate={disableBookedDays}
+                />
             </Box>
             <Box margin={1}>
               <Field
@@ -115,6 +139,7 @@ const ReservationForm = ({tourId}) => {
                 InputLabelProps={{
                   shrink: true,
                 }}
+                disabled
               >
               </Field>
             </Box>
