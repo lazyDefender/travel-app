@@ -6,6 +6,7 @@ import { types } from './types';
 // Fire
 import fire from '../../firebase'
 import moment from 'moment';
+import { getPlace } from '../../global/getPlace';
 
 export const toursActions = Object.freeze({
     //Sync
@@ -140,9 +141,44 @@ export const toursActions = Object.freeze({
 
         const finalTours = toursWithoutBadOnes.filter(t => hotelsIdsFilteredByPeopleCount.includes(t.hotel.id))
 
-        console.log('finalTours', finalTours)
+        
 
-        dispatch(toursActions.fill(finalTours))
+        const finalToursWithHotels = []
+        for(let t of finalTours) {
+            const {id} = t.hotel
+            const hotelDoc = await fire
+                .firestore()
+                .collection('hotels')
+                .doc(id)
+                .get()
+            
+
+
+
+            const h = {
+                ...t,
+                hotel: {
+                    ...hotelDoc.data(),
+                    id: hotelDoc.id,
+                    // ...data.candidates[0],
+                }
+            } 
+
+            const p = await getPlace(h.hotel.name)
+            console.log(p)
+            finalToursWithHotels.push({
+                ...h,
+                hotel: {
+                    ...h.hotel,
+                    ...p.candidates[0],
+                }
+            })
+        }
+
+        // console.log('finalToursWithHotels', finalToursWithHotels)
+
+        
+        dispatch(toursActions.fill(finalToursWithHotels))
         dispatch(toursActions.stopFetching())
     }
 })

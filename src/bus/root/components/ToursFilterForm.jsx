@@ -38,7 +38,6 @@ import FormatAlignJustifyIcon from '@material-ui/icons/FormatAlignJustify';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 
 import useCities from '../hooks/useCities' 
-import GoogleMap from './GoogleMap';
 import { store } from '../../../init/store'
 import { toursActions } from '../../../redux/tours/actions'
 import { Link } from 'react-router-dom';

@@ -43,7 +43,6 @@ import FormatAlignJustifyIcon from '@material-ui/icons/FormatAlignJustify';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 
 import useCities from '../hooks/useCities' 
-import GoogleMap from './GoogleMap';
 import useToursFilter from '../hooks/useToursFilter';
 import { store } from '../../../init/store'
 import { toursActions } from '../../../redux/tours/actions'

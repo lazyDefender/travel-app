@@ -4,6 +4,7 @@ import { book } from './book'
 import RootPage from '../pages/root'
 import SignUpPage from '../pages/signup'
 import LoginPage from '../pages/login'
+import HotelPage from '../pages/hotels'
 
 export const Routes = () => {
     return <>
@@ -16,6 +17,9 @@ export const Routes = () => {
             </Route>
             <Route path={book.login}>
                 <LoginPage />
+            </Route>
+            <Route path={book.hotelsById}>
+                <HotelPage />
             </Route>
         </Switch>
     </>

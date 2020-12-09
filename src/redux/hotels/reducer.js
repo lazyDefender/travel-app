@@ -6,28 +6,28 @@ const initialState = {
     error: null,
 };
 
-export const hotelsReducer = (state = initialState, {type, payload}) => {
+export const hotelReducer = (state = initialState, {type, payload}) => {
     switch(type) {
-        case types.HOTELS_START_FETCHING: 
+        case types.HOTEL_START_FETCHING: 
         return {
             ...state,
             isFetching: true,
         };
 
-        case types.HOTELS_STOP_FETCHING: 
+        case types.HOTEL_STOP_FETCHING: 
         return {
             ...state,
             isFetching: false,
         };
 
-        case types.HOTELS_SET_FETCHING_ERROR:
+        case types.HOTEL_SET_FETCHING_ERROR:
         return {
             ...state,
             error: payload,
             data: null,
         }
 
-        case types.HOTELS_FILL: 
+        case types.HOTEL_FILL: 
         return {
             ...state,
             data: payload,

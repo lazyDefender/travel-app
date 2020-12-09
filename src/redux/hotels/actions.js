@@ -6,38 +6,33 @@ import { types } from './types';
 // Fire
 import fire from '../../firebase'
 import moment from 'moment';
+import { getPlace } from '../../global/getPlace';
 
-export const hotelsActions = Object.freeze({
+export const hotelActions = Object.freeze({
     //Sync
     startFetching: () => {
         return {
-            type: types.HOTELS_START_FETCHING,
+            type: types.HOTEL_START_FETCHING,
         }
     },
 
     stopFetching: () => {
         return {
-            type: types.HOTELS_STOP_FETCHING,
+            type: types.HOTEL_STOP_FETCHING,
         }
     },
 
     fill: (payload) => {
         return {
-            type: types.HOTELS_FILL,
+            type: types.HOTEL_FILL,
             payload,
         }
     },
 
-    // add: (payload) => {
-    //     return {
-    //         type: types.HOTELS_ADD,
-    //         payload,
-    //     }
-    // },
 
     setFetchingError: (error) => {
         return {
-            type: types.HOTELS_SET_FETCHING_ERROR,
+            type: types.HOTEL_SET_FETCHING_ERROR,
             error: true,
             payload: error,
         }
@@ -45,36 +40,45 @@ export const hotelsActions = Object.freeze({
 
     //Async
     fetchById: (id) => async (dispatch) => {
-        dispatch(hotelsActions.startFetching())
+        dispatch(hotelActions.startFetching())
         const hotelDoc = await fire
             .firestore()
             .collection('hotels')
             .doc(id)
             .get()
+
+
         const hotel = {
             id: hotelDoc.id,
-            ...hotelDoc,
+            ...hotelDoc.data(),
         }
-        console.log(hotel)
+
+        const place = await getPlace(hotel.name)
+        const result = {
+            ...hotel,
+            ...place.candidates[0],
+        }
+        dispatch(hotelActions.fill(result))
+        dispatch(hotelActions.stopFetching())
     },
 
-    fetchHotels: (hotelRefs) => async (dispatch) => {
-        dispatch(hotelsActions.startFetching())
-        const hotels = []
-        for(let ref of hotelRefs) {
-            const {id} = ref
-            const hotelDoc = await fire
-                .firestore()
-                .collection('hotels')
-                .doc(id)
-                .get()
-            const hotel = {
-                id: hotelDoc.id,
-                ...hotelDoc,
-            }
-            hotels.push(hotel)
-        }
-        dispatch(hotelsActions.fill(hotels))
-        dispatch(hotelsActions.stopFetching())
-    }
+    // fetchhotel: (hotelRefs) => async (dispatch) => {
+    //     dispatch(hotelActions.startFetching())
+    //     const hotel = []
+    //     for(let ref of hotelRefs) {
+    //         const {id} = ref
+    //         const hotelDoc = await fire
+    //             .firestore()
+    //             .collection('hotel')
+    //             .doc(id)
+    //             .get()
+    //         const hotel = {
+    //             id: hotelDoc.id,
+    //             ...hotelDoc,
+    //         }
+    //         hotel.push(hotel)
+    //     }
+    //     dispatch(hotelActions.fill(hotel))
+    //     dispatch(hotelActions.stopFetching())
+    // }
 })
