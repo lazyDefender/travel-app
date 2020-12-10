@@ -31,7 +31,6 @@ export const profileActions = Object.freeze({
     //Async
     updateUser: (user) => async (dispatch) => {
         dispatch(profileActions.startFetching())
-        console.log(user)
 
         const userRef = await fire
             .firestore()

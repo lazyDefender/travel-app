@@ -1,5 +1,6 @@
 import React from 'react'
 import { makeStyles } from '@material-ui/core/styles';
+import Grid from '@material-ui/core/Grid'
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
@@ -25,43 +26,38 @@ const ToursListItem = ({hotel, adultPrice, kidPrice}) => {
   const photoRef = photos ? photos[0].photo_reference : ''
   const finalPhotoSrc = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${photoRef}&key=${process.env.REACT_APP_API_KEY}`
   return (
-    <Link to={`${book.hotels}/${id}`}>
-      <Card className={classes.root}>
-        <CardActionArea>
-          <CardMedia
-            component="img"
-            alt="Contemplative Reptile"
-            height="140"
-            image={finalPhotoSrc}
-            title="Contemplative Reptile"
-          />
-          <CardContent>
-            <Typography gutterBottom variant="h5" component="h2">
-              {hotel.name}
-            </Typography>
-            <Typography variant="body2" color="textSecondary" component="p">
-              1 дор - {adultPrice}$
-            </Typography>
-            <Typography variant="body2" color="textSecondary" component="p">
-              1 дит - {kidPrice}$
-            </Typography>
-            <Rating
-              name="simple-controlled"
-              value={rating}
-              disabled
+    <Grid item>
+      <Link to={`${book.hotels}/${id}`}>
+        <Card className={classes.root}>
+          <CardActionArea>
+            <CardMedia
+              component="img"
+              alt="Contemplative Reptile"
+              height="140"
+              image={finalPhotoSrc}
+              title={hotel.name}
             />
-          </CardContent>
-        </CardActionArea>
-        <CardActions>
-          <Button size="small" color="primary">
-            Share
-          </Button>
-          <Button size="small" color="primary">
-            Learn More
-          </Button>
-        </CardActions>
-      </Card>
-    </Link>
+            <CardContent>
+              <Typography gutterBottom variant="h5" component="h2">
+                {hotel.name}
+              </Typography>
+              <Typography variant="body2" color="textSecondary" component="p">
+                1 дор - {adultPrice}$
+              </Typography>
+              <Typography variant="body2" color="textSecondary" component="p">
+                1 дит - {kidPrice}$
+              </Typography>
+              <Rating
+                name="simple-controlled"
+                value={rating}
+                disabled
+              />
+            </CardContent>
+          </CardActionArea>
+          
+        </Card>
+      </Link>
+    </Grid>
   );
 }
 

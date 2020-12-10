@@ -9,6 +9,7 @@ import {
     Button,
 } from '@material-ui/core'
 import { Link } from 'react-router-dom'
+import { book } from '../../../navigation/book'
 
 const Order = (props) => {
     const { photos } = props
@@ -16,7 +17,7 @@ const Order = (props) => {
     const finalPhotoSrc = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${photoRef}&key=${process.env.REACT_APP_API_KEY}`
   
     return <>
-        <Link to='/'>
+        <Link to={`${book.hotels}/${props.hotel.id}`}>
       <Card>
         <CardActionArea>
           <CardMedia
@@ -24,7 +25,7 @@ const Order = (props) => {
             alt="Contemplative Reptile"
             height="140"
             image={finalPhotoSrc}
-            title="Contemplative Reptile"
+            title={props.hotel.name}
           />
           <CardContent>
             <Typography gutterBottom variant="h5" component="h2">

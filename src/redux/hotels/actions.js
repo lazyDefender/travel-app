@@ -61,24 +61,4 @@ export const hotelActions = Object.freeze({
         dispatch(hotelActions.fill(result))
         dispatch(hotelActions.stopFetching())
     },
-
-    // fetchhotel: (hotelRefs) => async (dispatch) => {
-    //     dispatch(hotelActions.startFetching())
-    //     const hotel = []
-    //     for(let ref of hotelRefs) {
-    //         const {id} = ref
-    //         const hotelDoc = await fire
-    //             .firestore()
-    //             .collection('hotel')
-    //             .doc(id)
-    //             .get()
-    //         const hotel = {
-    //             id: hotelDoc.id,
-    //             ...hotelDoc,
-    //         }
-    //         hotel.push(hotel)
-    //     }
-    //     dispatch(hotelActions.fill(hotel))
-    //     dispatch(hotelActions.stopFetching())
-    // }
 })

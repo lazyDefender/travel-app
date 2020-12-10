@@ -1,13 +1,8 @@
-import firebase from 'firebase'
-// Api
-import { api } from '../../api';
 // Types
 import { types } from './types';
 // Fire
 import fire from '../../firebase'
-import moment from 'moment';
 import { getPlace } from '../../global/getPlace';
-import { hotelActions } from '../hotels/actions';
 
 export const ordersActions = Object.freeze({
     //Sync

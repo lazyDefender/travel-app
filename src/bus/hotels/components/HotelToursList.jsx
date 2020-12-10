@@ -7,6 +7,7 @@ import {
     TableRow,
     TableCell,
     Paper,
+    Button,
 } from '@material-ui/core'
 import { Link } from 'react-router-dom'
 
@@ -31,9 +32,11 @@ const HotelToursList = ({tours}) => {
                 <TableCell align="center">{tour.adultPrice}$</TableCell>
                 <TableCell align="center">{tour.kidPrice}$</TableCell>
                 <TableCell align="center">
+                  <Button>
                     <Link to={`${book.reservation}?tourId=${encodeURIComponent(tour.id)}`}>
                         Забронювати
                     </Link>
+                  </Button>
                 </TableCell>
             </TableRow>
           ))}

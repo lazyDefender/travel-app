@@ -6,8 +6,6 @@ import { types } from './types';
 // Fire
 import fire from '../../firebase'
 import moment from 'moment';
-import { getPlace } from '../../global/getPlace';
-import { hotelActions } from '../hotels/actions';
 
 export const reservationActions = Object.freeze({
     //Sync
@@ -49,7 +47,6 @@ export const reservationActions = Object.freeze({
             id: tourRes.id,
             ...tourRes.data(),
         }
-        // console.log('tour', tour)
 
         const hotelRes = await fire
             .firestore()
@@ -60,8 +57,6 @@ export const reservationActions = Object.freeze({
             id: hotelRes.id,
             ...hotelRes.data(),
         }
-        // console.log('hotel', hotel)
-
         const cityRes = await fire
             .firestore()
             .collection('cities')
@@ -72,10 +67,6 @@ export const reservationActions = Object.freeze({
             id: cityRes.id,
             ...cityRes.data(),
         }
-        // console.log('city', toCity)
-
-        
-
 
         const bookedDaysRes = await fire
             .firestore()

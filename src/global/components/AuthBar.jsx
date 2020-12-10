@@ -12,7 +12,6 @@ const signOut = () => {
 
 const AuthBar = (props) => {
     const auth = useAuth()
-    console.log('auth',auth)
     const defaultBar = <>
         <Button>
             <Link to={book.signup}>Зареєструватись</Link>

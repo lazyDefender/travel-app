@@ -148,20 +148,15 @@ export const toursActions = Object.freeze({
                 .doc(id)
                 .get()
             
-
-
-
             const h = {
                 ...t,
                 hotel: {
                     ...hotelDoc.data(),
                     id: hotelDoc.id,
-                    // ...data.candidates[0],
                 }
             } 
 
             const p = await getPlace(h.hotel.name)
-            console.log(p)
             finalToursWithHotels.push({
                 ...h,
                 hotel: {
@@ -170,9 +165,6 @@ export const toursActions = Object.freeze({
                 }
             })
         }
-
-        // console.log('finalToursWithHotels', finalToursWithHotels)
-
         dispatch(toursActions.fill(finalToursWithHotels))
         dispatch(toursActions.stopFetching())
     },
