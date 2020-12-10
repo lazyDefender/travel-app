@@ -41,7 +41,6 @@ export const toursFilterActions = Object.freeze({
     //Async
     fetchAsync: (filters) => async (dispatch) => {
         const {
-            fromCity,
             toCity,
             datetime,
             duration,
@@ -50,10 +49,6 @@ export const toursFilterActions = Object.freeze({
         } = filters
 
         dispatch(toursFilterActions.startFetching())
-        const fromCityRef = await fire
-            .firestore()
-            .collection('cities')
-            .doc(fromCity)
             
         const toCityRef = await fire
             .firestore()
@@ -63,7 +58,6 @@ export const toursFilterActions = Object.freeze({
         const toursResponse = await fire
             .firestore()
             .collection('tours')
-            .where('fromCity', '==', fromCityRef)
             .where('toCity', '==', toCityRef)
             .where('duration', '==', duration)
             .get()

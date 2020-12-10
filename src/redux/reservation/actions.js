@@ -49,7 +49,7 @@ export const reservationActions = Object.freeze({
             id: tourRes.id,
             ...tourRes.data(),
         }
-        console.log('tour', tour)
+        // console.log('tour', tour)
 
         const hotelRes = await fire
             .firestore()
@@ -60,7 +60,7 @@ export const reservationActions = Object.freeze({
             id: hotelRes.id,
             ...hotelRes.data(),
         }
-        console.log('hotel', hotel)
+        // console.log('hotel', hotel)
 
         const cityRes = await fire
             .firestore()
@@ -72,7 +72,7 @@ export const reservationActions = Object.freeze({
             id: cityRes.id,
             ...cityRes.data(),
         }
-        console.log('city', toCity)
+        // console.log('city', toCity)
 
         
 
@@ -98,6 +98,40 @@ export const reservationActions = Object.freeze({
         }
 
         dispatch(reservationActions.fill(result))
+    },
+
+    saveOrderAsync: (order) => async (dispatch) => {
+        dispatch(reservationActions.startFetching())
+        const {
+            adultsCount,
+            kidsCount,
+            datetime,
+            tourId,
+            userId,
+        } = order
+
+        const userRef = await fire
+            .firestore()
+            .collection('users')
+            .doc(userId)
+        const tourRef = await fire
+            .firestore()
+            .collection('tours')
+            .doc(tourId)
+
+        const fullOrder = {
+            adultsCount,
+            kidsCount,
+            datetime,
+            tour: tourRef,
+            user: userRef,
+        }
+
+        const ordersRes = await fire
+            .firestore()
+            .collection('orders')
+            .add(fullOrder)
+        dispatch(reservationActions.startFetching())
     }
 
 })

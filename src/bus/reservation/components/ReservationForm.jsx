@@ -41,6 +41,8 @@ import { Link } from 'react-router-dom';
 import { store } from '../../../init/store'
 import { toursFilterActions } from '../../../redux/toursFilter/actions'
 import useTour from '../hooks/useTour'
+import { reservationActions } from '../../../redux/reservation/actions';
+import { useSelector } from 'react-redux';
 
 const disableBookedDays = (date) => {
     const bookedDays = store.getState().reservation.data?.bookedDays || []
@@ -60,7 +62,9 @@ const disableBookedDays = (date) => {
 
 const ReservationForm = ({tourId}) => {
     const tour = useTour(tourId)
-    
+    const { id } = useSelector(state => state.auth.data || {})
+    console.log(id)
+
     return (
         <>
           <Formik
@@ -76,11 +80,11 @@ const ReservationForm = ({tourId}) => {
         return errors;
       }}
       onSubmit={(values, {setSubmitting}) => {
-        setTimeout(() => {
-          setSubmitting(false);
-          // alert(JSON.stringify(values, null, 2));
-        }, 500);
-        store.dispatch(toursFilterActions.fetchAsync(values))
+        store.dispatch(reservationActions.saveOrderAsync({
+          ...values,
+          tourId,
+          userId: id,
+        }))
       }}
     >
       {({submitForm, isSubmitting, touched, errors}) => (
@@ -121,7 +125,7 @@ const ReservationForm = ({tourId}) => {
             <Box margin={1}>
                 <Field 
                     component={DatePicker} 
-                    disablePast={true} 
+                    disablePast
                     name="datetime" 
                     label="Початок туру" 
                     shouldDisableDate={disableBookedDays}
@@ -171,7 +175,7 @@ const ReservationForm = ({tourId}) => {
               <Button
                 variant="contained"
                 color="primary"
-                disabled={isSubmitting}
+                // disabled={isSubmitting}
                 onClick={submitForm}
               >
                 Submit

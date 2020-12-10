@@ -79,6 +79,7 @@ const SignUpForm = () => {
             }}
             onSubmit={(values, {setSubmitting}) => {
                 store.dispatch(authActions.signIn(values))
+                history.back()
             }}
         >
         {({submitForm, isSubmitting, touched, errors}) => (

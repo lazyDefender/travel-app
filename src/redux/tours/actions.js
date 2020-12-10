@@ -50,10 +50,6 @@ export const toursActions = Object.freeze({
         } = filters
 
         dispatch(toursActions.startFetching())
-        const fromCityRef = await fire
-            .firestore()
-            .collection('cities')
-            .doc(fromCity)
             
         const toCityRef = await fire
             .firestore()
@@ -63,7 +59,6 @@ export const toursActions = Object.freeze({
         const toursResponse = await fire
             .firestore()
             .collection('tours')
-            .where('fromCity', '==', fromCityRef)
             .where('toCity', '==', toCityRef)
             .where('duration', '==', duration)
             .get()

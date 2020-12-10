@@ -50,7 +50,7 @@ export const authActions = Object.freeze({
         const newUser = {
             firstName,
             lastName,
-            userID: uid,
+            userAuthID: uid,
         }
         const userRes = await fire
             .firestore()
@@ -80,6 +80,7 @@ export const authActions = Object.freeze({
             .get()
         const userDoc = userRes.docs[0]
         const userData = {
+            id: userDoc.id,
             ...userDoc.data(),
         }
         dispatch(authActions.fill(userData))
