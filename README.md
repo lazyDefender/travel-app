@@ -1,4 +1,9 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Використані API:
+  GOOGLE PLACES API
+  GOOGLE MAPS API
+Категорія: Подорожі
+
 
 ## Available Scripts
 
