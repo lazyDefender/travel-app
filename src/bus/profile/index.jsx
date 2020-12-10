@@ -1,30 +1,30 @@
 import React from 'react'
 import {
-    Grid,
+    CircularProgress,
+    Typography,
 } from '@material-ui/core'
 import { useSelector } from 'react-redux'
 
-import Order from './components/Order'
 import useOrdersByUser from './hooks/useOrdersByUser'
 import UserForm from './components/UserForm'
+import useAuth from '../../global/hooks/useAuth'
+import { Redirect } from 'react-router-dom'
+import { book } from '../../navigation/book'
+import OrdersList from './components/OrdersList'
 
 const Profile = (props) => {
-    const { id } = useSelector(state => state.auth.data || {})
+    const { isFetching } = useSelector(state => state.orders || {})
+    const auth = useAuth()
+    const id = auth?.id
     const orders = useOrdersByUser(id)
-    return <>
-        <UserForm/>
-         <Grid container spacing={3}>
-             {orders?.map(o => {
-                 return <>
-                    <Grid item 
-                    // xs={12}
-                    >
-                        <Order {...o}/>
-                    </Grid>
-                 </>
-             })}
-      </Grid>
-    </>
+    const ordersJSX = isFetching ? <CircularProgress/> : <OrdersList orders={orders}/>
+    const page = <>
+                    <UserForm/>
+                    <Typography>Мої замовлення</Typography>
+                    {ordersJSX}
+                </>
+    const content = auth ? page : <Redirect to={book.root}/>
+    return content
 }
 
 export default Profile

@@ -8,17 +8,13 @@ import {
     CardContent,
     Button,
 } from '@material-ui/core'
-import {
-    Rating
-} from '@material-ui/lab'
 import { Link } from 'react-router-dom'
 
-
-import { book } from '../../../navigation/book'
-
-
 const Order = (props) => {
-  console.log(props)
+    const { photos } = props
+    const photoRef = photos ? photos[0].photo_reference : ''
+    const finalPhotoSrc = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${photoRef}&key=${process.env.REACT_APP_API_KEY}`
+  
     return <>
         <Link to='/'>
       <Card>
@@ -27,7 +23,7 @@ const Order = (props) => {
             component="img"
             alt="Contemplative Reptile"
             height="140"
-            // image={finalPhotoSrc}
+            image={finalPhotoSrc}
             title="Contemplative Reptile"
           />
           <CardContent>

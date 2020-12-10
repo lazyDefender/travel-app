@@ -1,20 +1,21 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
-import AuthBar from '../../global/components/AuthBar'
+import {
+    CircularProgress,
+} from '@material-ui/core'
 
-import useHotels from '../../global/hooks/useHotels'
-import { book } from '../../navigation/book'
+import AuthBar from '../../global/components/AuthBar'
 import ToursFilterForm from './components/ToursFilterForm'
 import ToursList from './components/ToursList'
 
 const Root = () => {
-    const foundTours = useSelector(state => state.toursFilter.data)
+    const foundTours = useSelector(state => state.toursFilter)
     return (
         <div>
             <AuthBar/>
             <ToursFilterForm/>
-            <ToursList tours={foundTours}/>
+            {foundTours.isFetching ? <CircularProgress/> : <ToursList tours={foundTours.data}/>}
+            
         </div>
     )
 }

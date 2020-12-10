@@ -1,45 +1,19 @@
 import React from 'react';
-import {render} from 'react-dom';
 import {Formik, Form, Field} from 'formik';
 import {
   Button,
-  LinearProgress,
-  MenuItem,
-  FormControl,
-  InputLabel,
-  FormControlLabel,
-  Typography,
-  Accordion,
-  AccordionSummary,
-  AccordionDetails,
-  Checkbox,
-  ListSubheader,
+  Box
 } from '@material-ui/core';
-import MuiTextField from '@material-ui/core/TextField'
 import {
-  fieldToTextField,
   TextField,
-  TextFieldProps,
-  Select,
-  Switch,
 } from 'formik-material-ui';
 import {
-  TimePicker,
   DatePicker,
-  DateTimePicker,
 } from 'formik-material-ui-pickers';
 import MomentUtils from '@date-io/moment';
-import {MuiPickersUtilsProvider} from '@material-ui/pickers';
-import Box from '@material-ui/core/Box';
-import FormatAlignLeftIcon from '@material-ui/icons/FormatAlignLeft';
-import FormatAlignCenterIcon from '@material-ui/icons/FormatAlignCenter';
-import FormatAlignRightIcon from '@material-ui/icons/FormatAlignRight';
-import FormatAlignJustifyIcon from '@material-ui/icons/FormatAlignJustify';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
-import { Link } from 'react-router-dom';
+import {MuiPickersUtilsProvider} from '@material-ui/pickers'
 
 import { store } from '../../../init/store'
-import { toursFilterActions } from '../../../redux/toursFilter/actions'
 import useTour from '../hooks/useTour'
 import { reservationActions } from '../../../redux/reservation/actions';
 import { useSelector } from 'react-redux';
@@ -56,15 +30,12 @@ const disableBookedDays = (date) => {
     console.log('jsDate',jsDate)
     
     const jsBookedDays = bookedDays.map(d => d.toDate())
-    console.log('date', jsBookedDays)
-    // console.log(jsBookedDays.includes(jsDate))
     return jsBookedDays.includes(jsDate)
 }
 
 const ReservationForm = ({tourId}) => {
     const tour = useTour(tourId)
     const { id } = useSelector(state => state.auth.data || {})
-    console.log(id)
 
     return (
         <>

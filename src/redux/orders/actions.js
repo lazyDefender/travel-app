@@ -84,11 +84,15 @@ export const ordersActions = Object.freeze({
                 ...hotelRes.data(),
             }
 
-            orders.push({
+            const place = await getPlace(hotel.name)
+            const result = {
                 ...order,
                 tour,
                 hotel,
-            })
+                ...place.candidates[0],
+            }
+
+            orders.push(result)
         }
 
         console.log('orders',orders)

@@ -1,7 +1,7 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Provider } from 'react-redux'
 import { BrowserRouter as Router } from 'react-router-dom'
-import { Link } from 'react-router-dom'
+import firebase from 'firebase'
 import './App.css'
 
 import { store } from './init/store'

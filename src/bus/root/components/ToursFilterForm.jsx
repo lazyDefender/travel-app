@@ -1,46 +1,24 @@
 import React from 'react';
-import {render} from 'react-dom';
 import {Formik, Form, Field} from 'formik';
 import {
   Button,
   LinearProgress,
   MenuItem,
-  FormControl,
-  InputLabel,
-  FormControlLabel,
-  Typography,
-  Accordion,
-  AccordionSummary,
-  AccordionDetails,
-  Checkbox,
-  ListSubheader,
+  Grid,
+  Box,
 } from '@material-ui/core';
-import MuiTextField from '@material-ui/core/TextField'
 import {
-  fieldToTextField,
   TextField,
-  TextFieldProps,
-  Select,
-  Switch,
 } from 'formik-material-ui';
 import {
-  TimePicker,
   DatePicker,
-  DateTimePicker,
 } from 'formik-material-ui-pickers';
 import MomentUtils from '@date-io/moment';
 import {MuiPickersUtilsProvider} from '@material-ui/pickers';
-import Box from '@material-ui/core/Box';
-import FormatAlignLeftIcon from '@material-ui/icons/FormatAlignLeft';
-import FormatAlignCenterIcon from '@material-ui/icons/FormatAlignCenter';
-import FormatAlignRightIcon from '@material-ui/icons/FormatAlignRight';
-import FormatAlignJustifyIcon from '@material-ui/icons/FormatAlignJustify';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 
 import useCities from '../hooks/useCities' 
 import { store } from '../../../init/store'
 import { toursFilterActions } from '../../../redux/toursFilter/actions'
-import { Link } from 'react-router-dom';
 
 const ToursFilterForm = () => {
 
@@ -62,120 +40,99 @@ const ToursFilterForm = () => {
       <>
         <Formik
     initialValues={{
-      fromCity: '',
-      toCity: '',
+      toCity: 'Південний Мале Атол',
       datetime: new Date(),
-      duration: '',
-      adultsCount: '',
-      kidsCount: '',
+      duration: 8,
+      adultsCount: 1,
+      kidsCount: 1,
     }}
     validate={(values) => {
       const errors = {};
       return errors;
     }}
     onSubmit={(values, {setSubmitting}) => {
-      setTimeout(() => {
-        setSubmitting(false);
-        // alert(JSON.stringify(values, null, 2));
-      }, 500);
       store.dispatch(toursFilterActions.fetchAsync(values))
+      setSubmitting(false);
     }}
   >
     {({submitForm, isSubmitting, touched, errors}) => (
       <MuiPickersUtilsProvider utils={MomentUtils}>
         <Form>
-        <Box margin={1}>
-            <Field
-              component={TextField}
-              type="text"
-              name="fromCity"
-              label="Звідки"
-              select
-              variant="standard"
-              margin="normal"
-              InputLabelProps={{
-                shrink: true,
-              }}
-            >
-              {cities?.filter(city => city.isFrom === true).map((city) => (
-                <MenuItem key={city.id} value={city.id}>
-                  {city.name}
-                </MenuItem>
-              ))}
-            </Field>
-          </Box>
+          <Grid container direction="row" alignItems="center">
+          
           {isSubmitting && <LinearProgress />}
           
+          <Grid item>
+            <Box margin={1}>
+              <Field
+                component={TextField}
+                type="text"
+                name="toCity"
+                label="Куди"
+                select
+                variant="standard"
+                margin="normal"
+                InputLabelProps={{
+                  shrink: true,
+                }}
+              >
+                {cities?.map((city) => (
+                  <MenuItem key={city.id} value={city.id}>
+                    {city.name}
+                  </MenuItem>
+                ))}
+              </Field>
+            </Box>
+          </Grid>
           
-          <Box margin={1}>
-            <Field
-              component={TextField}
-              type="text"
-              name="toCity"
-              label="Куди"
-              select
-              variant="standard"
-              margin="normal"
-              InputLabelProps={{
-                shrink: true,
-              }}
-            >
-              {/* {countriesTo?.map(country => {
-                const headerJSX = <ListSubheader>{country.country}</ListSubheader>
-                const citiesJSX = country.cities.map(city => <MenuItem key={city.id} value={city.name}>{city.name}</MenuItem>)
-                return <>
-                  {headerJSX}
-                  {citiesJSX}
-                </>
-                
-              })} */}
-              {cities?.map((city) => (
-                <MenuItem key={city.id} value={city.id}>
-                  {city.name}
-                </MenuItem>
-              ))}
-            </Field>
-          </Box>
-          <Box margin={1}>
-            <Field component={DatePicker} disablePast={true} name="datetime" label="Початок туру" />
-          </Box>
-          <Box margin={1}>
-            <Field
-              component={TextField}
-              type="text"
-              name="duration"
-              label="Тривалість туру"
-              select
-              variant="standard"
-              margin="normal"
-              InputLabelProps={{
-                shrink: true,
-              }}
-            >
-              
-              {daysCounts.map((c) => (
-                <MenuItem key={c} value={c}>
-                  {c}
-                </MenuItem>
-              ))}
-            </Field>
-          </Box>
-          <Box margin={1}>
-            <Field
-              component={TextField}
-              name="adultsCount"
-              type="number"
-              label="Adults"
-            />
-          </Box>
-          <Box margin={1}>
-            <Field
-              component={TextField}
-              name="kidsCount"
-              type="number"
-              label="Kids"
-            />
-          </Box>
+          <Grid item>
+            <Box margin={1}>
+              <Field component={DatePicker} disablePast={true} name="datetime" label="Початок туру" />
+            </Box>
+          </Grid>
+          
+          <Grid item>
+            <Box margin={1}>
+              <Field
+                component={TextField}
+                type="text"
+                name="duration"
+                label="Ночей"
+                select
+                variant="standard"
+                margin="normal"
+                InputLabelProps={{
+                  shrink: true,
+                }}
+              >
+                <MenuItem value={8}>
+                    8
+                  </MenuItem>
+              </Field>
+            </Box>
+          </Grid>
+          <Grid item>
+            <Box margin={1}>
+              <Field
+                component={TextField}
+                name="adultsCount"
+                type="number"
+                label="К-сть дорослих"
+              />
+            </Box>
+          </Grid>
+
+          <Grid item>
+            <Box margin={1}>
+              <Field
+                component={TextField}
+                name="kidsCount"
+                type="number"
+                label="К-сть дітей"
+              />
+            </Box>
+          </Grid>
+          
           <Box margin={1}>
             <Button
               variant="contained"
@@ -183,9 +140,10 @@ const ToursFilterForm = () => {
               disabled={isSubmitting}
               onClick={submitForm}
             >
-              Submit
+              Знайти
             </Button>
           </Box>
+          </Grid>
         </Form>
       </MuiPickersUtilsProvider>
     )}

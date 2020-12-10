@@ -3,7 +3,7 @@ import React from 'react'
 import ToursListItem from './ToursListItem'
 
 
-const ToursList = ({tours, hotels}) => {
+const ToursList = ({tours}) => {
     return (
         <>
         {tours?.map((tour) => {
