@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -42,36 +42,20 @@ import FormatAlignRightIcon from '@material-ui/icons/FormatAlignRight';
 import FormatAlignJustifyIcon from '@material-ui/icons/FormatAlignJustify';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 
-import useCities from '../hooks/useCities' 
-import useToursFilter from '../hooks/useToursFilter';
 import { store } from '../../../init/store'
 import { toursActions } from '../../../redux/tours/actions'
 import { Link } from 'react-router-dom';
 import { authActions } from '../../../redux/auth/actions';
 import { history } from '../../../navigation/history'
+import { profileActions } from '../../../redux/profile/actions';
+import useAuth from '../../../global/hooks/useAuth'
 
 
-
-const SignUpForm = () => {
-  const [open, setOpen] = React.useState(true);
-
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
-
-  return (
-    <div>
-      <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
-        <DialogTitle id="form-dialog-title">Зареєструватись</DialogTitle>
-        <DialogContent>
+const UserForm = () => {
+    const { id } = useAuth() || {}
+    return <>
         <Formik
             initialValues={{
-                email: '',
-                password: '',
                 firstName: '',
                 lastName: '',
             }}
@@ -81,12 +65,15 @@ const SignUpForm = () => {
             }}
             onSubmit={(values, {setSubmitting}) => {
                 // alert(JSON.stringify(values, null, 2));
-                store.dispatch(authActions.createUser(values))
-                history.back()
+                store.dispatch(profileActions.updateUser({
+                    ...values,
+                    id,
+                }))
             }}
         >
         {({submitForm, isSubmitting, touched, errors}) => (
         <MuiPickersUtilsProvider utils={MomentUtils}>
+            Змінити дані користувача
             <Form>
                 <Box margin={1}>
                     <Field
@@ -107,23 +94,6 @@ const SignUpForm = () => {
                     />
                 </Box>
                 <Box margin={1}>
-                    <Field
-                    component={TextField}
-                    name="email"
-                    label="Email"
-                    disabled={false}
-                    />
-                </Box>
-                <Box margin={1}>
-                    <Field
-                    component={TextField}
-                    type="password"
-                    name="password"
-                    label="Пароль"
-                    disabled={false}
-                    />
-                </Box>
-                <Box margin={1}>
                     <Button
                     variant="contained"
                     color="primary"
@@ -136,10 +106,7 @@ const SignUpForm = () => {
         </MuiPickersUtilsProvider>
         )}
     </Formik>
-    </DialogContent>
-      </Dialog>
-    </div>
-  );
+    </>
 }
 
-export default SignUpForm
+export default UserForm

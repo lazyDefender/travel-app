@@ -7,4 +7,5 @@ export const types = Object.freeze({
 
     // Async
     AUTH_FETCH_ASYNC: 'AUTH_FETCH_ASYNC',
+    AUTH_SIGN_OUT_ASYNC: 'AUTH_SIGN_OUT_ASYNC',
 })

@@ -7,7 +7,8 @@ import { toursReducer as tours } from '../redux/tours/reducer'
 import { authReducer as auth } from '../redux/auth/reducer'
 import { hotelReducer as hotel } from '../redux/hotels/reducer'
 import { reservationReducer as reservation } from '../redux/reservation/reducer'
-
+import { ordersReducer as orders } from '../redux/orders/reducer'
+import { profileReducer as profile } from '../redux/profile/reducer'
 
 export const rootReducer = combineReducers({
     // reducers
@@ -17,4 +18,6 @@ export const rootReducer = combineReducers({
     auth,
     hotel,
     reservation,
+    orders,
+    profile,
 });

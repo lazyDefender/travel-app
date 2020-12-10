@@ -4,6 +4,7 @@ import { api } from '../../api';
 import { types } from './types';
 // Fire
 import fire from '../../firebase'
+import { store } from '../../init/store';
 
 export const authActions = Object.freeze({
     //Sync
@@ -85,6 +86,11 @@ export const authActions = Object.freeze({
         }
         dispatch(authActions.fill(userData))
         dispatch(authActions.stopFetching())
+    },
+
+    signOut: () => async (dispatch) => {
+        await fire.auth().signOut()
+        store.dispatch(authActions.fill(null))
     },
 
     fetchAsync: (id) => async (dispatch) => {
