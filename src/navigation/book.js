@@ -1,3 +1,9 @@
 export const book = Object.freeze({
-    // route: '/route',
+    root: '/',
+    signup: '/signup',
+    login: '/login',
+    hotelsById: '/hotels/:id',
+    hotels: '/hotels',
+    reservation: '/reservation',
+    profile: '/profile',
 })
