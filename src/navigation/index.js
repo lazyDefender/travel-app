@@ -6,6 +6,7 @@ import SignUpPage from '../pages/signup'
 import LoginPage from '../pages/login'
 import HotelPage from '../pages/hotels'
 import ReservationPage from '../pages/reservation'
+import ProfilePage from '../pages/profile'
 
 export const Routes = () => {
     return <>
@@ -24,6 +25,9 @@ export const Routes = () => {
             </Route>
             <Route path={book.reservation}>
                 <ReservationPage />
+            </Route>
+            <Route path={book.profile}>
+                <ProfilePage />
             </Route>
         </Switch>
     </>

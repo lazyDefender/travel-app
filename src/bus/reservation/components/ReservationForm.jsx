@@ -43,6 +43,7 @@ import { toursFilterActions } from '../../../redux/toursFilter/actions'
 import useTour from '../hooks/useTour'
 import { reservationActions } from '../../../redux/reservation/actions';
 import { useSelector } from 'react-redux';
+import { history } from '../../../navigation/history'
 
 const disableBookedDays = (date) => {
     const bookedDays = store.getState().reservation.data?.bookedDays || []
@@ -85,6 +86,7 @@ const ReservationForm = ({tourId}) => {
           tourId,
           userId: id,
         }))
+        history.back()
       }}
     >
       {({submitForm, isSubmitting, touched, errors}) => (

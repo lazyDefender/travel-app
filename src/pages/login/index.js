@@ -1,10 +1,10 @@
 import React from 'react';
 import LoginComponent from '../../bus/root/components/LoginForm';
 
-const Root = (props) => {
+const Login = (props) => {
     return <>
         <LoginComponent/>
     </>
 }
 
-export default Root
+export default Login
