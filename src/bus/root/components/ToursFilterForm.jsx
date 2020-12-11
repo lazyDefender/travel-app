@@ -26,7 +26,6 @@ const ToursFilterForm = () => {
   const cities = citiesRes.data
   const countries = new Set(cities?.map(city => city.country))
   const countriesTo = []
-  const daysCounts = new Array(19).fill(0).map((_, i) => i).map(n => n + 3)
 
   for(let country of countries) {
     const citiesByCountry = cities.filter(city => city.country === country)
@@ -118,6 +117,10 @@ const ToursFilterForm = () => {
                 name="adultsCount"
                 type="number"
                 label="К-сть дорослих"
+                inputProps={{
+                  min: 1,
+                  max: 6,
+                }}
               />
             </Box>
           </Grid>
@@ -129,6 +132,10 @@ const ToursFilterForm = () => {
                 name="kidsCount"
                 type="number"
                 label="К-сть дітей"
+                inputProps={{
+                  min: 0,
+                  max: 6,
+                }}
               />
             </Box>
           </Grid>
