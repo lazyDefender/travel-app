@@ -96,12 +96,10 @@ export const toursFilterActions = Object.freeze({
         }
 
         const foundToursIds = tours.map(t => t.id)
-        const badToursIds = badOrders.map(o => o.tour.id)
-        const toursIdsWithoutBadOnes = foundToursIds.filter(id => !badToursIds.includes(id))
 
-        const toursWithoutBadOnes = []
+        const foundTours = []
         
-        for(let tourId of toursIdsWithoutBadOnes) {
+        for(let tourId of foundToursIds) {
             const tourDoc = await fire
                 .firestore()
                 .collection('tours')
@@ -111,10 +109,10 @@ export const toursFilterActions = Object.freeze({
                 id: tourDoc.id,
                 ...tourDoc.data(),
             }
-            toursWithoutBadOnes.push(tour)
+            foundTours.push(tour)
         }
         
-        const hotelIds = toursWithoutBadOnes.map(t => t.hotel.id)
+        const hotelIds = foundTours.map(t => t.hotel.id)
         const hotels = []
         for(let hotelId of hotelIds) {
             const hotelDoc = await fire
@@ -134,7 +132,7 @@ export const toursFilterActions = Object.freeze({
                 .filter(h => h.maxAdultsCount >= adultsCount && h.maxKidsCount >= kidsCount)
                 .map(h => h.id)
 
-        const finalTours = toursWithoutBadOnes.filter(t => hotelsIdsFilteredByPeopleCount.includes(t.hotel.id))
+        const finalTours = foundTours.filter(t => hotelsIdsFilteredByPeopleCount.includes(t.hotel.id))
 
         
 

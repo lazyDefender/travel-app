@@ -10,12 +10,12 @@ import ToursList from './components/ToursList'
 
 const Root = () => {
     const foundTours = useSelector(state => state.toursFilter)
+    const toursListJSX = foundTours.data?.length === 0 ? 'За введеними фільтрами турів не знайдено' : <ToursList tours={foundTours.data}/>
     return (
         <div>
             <AuthBar/>
             <ToursFilterForm/>
-            {foundTours.isFetching ? <CircularProgress/> : <ToursList tours={foundTours.data}/>}
-            
+            {foundTours.isFetching ? <CircularProgress/> : toursListJSX}
         </div>
     )
 }
