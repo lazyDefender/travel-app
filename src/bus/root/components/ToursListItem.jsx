@@ -38,7 +38,7 @@ const ToursListItem = ({hotel, adultPrice, kidPrice}) => {
               title={hotel.name}
             />
             <CardContent>
-              <Typography gutterBottom variant="h5" component="h2">
+              <Typography noWrap gutterBottom variant="h5" component="h2">
                 {hotel.name}
               </Typography>
               <Typography variant="body2" color="textSecondary" component="p">

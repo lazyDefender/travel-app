@@ -13,19 +13,36 @@ const signOut = () => {
 const AuthBar = (props) => {
     const auth = useAuth()
     const defaultBar = <>
-        <Button>
+        <Button
+            variant="contained"
+            disableElevation
+            color="primary"
+        >
             <Link to={book.signup}>Зареєструватись</Link>
         </Button>
-        <Button>
+        <Button
+            variant="contained"
+            disableElevation
+            color="primary"
+        >
             <Link to={book.login}>Увійти</Link>
         </Button>
     </>
     const signedInBar = <>
-        <Button>
+        <Button
+            variant="contained"
+            disableElevation
+            color="primary"
+        >
             <Link to={book.profile}>Мій профіль</Link>
         </Button>
         
-        <Button onClick={signOut}>Вийти</Button>
+        <Button 
+            onClick={signOut}
+            variant="contained"
+            disableElevation
+            color="primary"
+        >Вийти</Button>
     </>
     return <>
     {auth ? signedInBar : defaultBar}
