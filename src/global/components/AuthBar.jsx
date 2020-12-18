@@ -31,6 +31,7 @@ const AuthBar = (props) => {
     const defaultBar =
     <AppBar
         position="fixed"
+        elevation={0}
       >
         <Toolbar>  
             <Grid
@@ -41,9 +42,8 @@ const AuthBar = (props) => {
             >
                 
                     <Grid item>
-                        Travel_app
+                        <Link to="/">Travel_app</Link>
                     </Grid>
-                    {/* <Divider/> */}
                     <Grid item>
                         <Button
                                 variant="contained"
@@ -67,6 +67,7 @@ const AuthBar = (props) => {
     const signedInBar = <>
     <AppBar
         position="fixed"
+        elevation={0}
       >
         <Toolbar>  
             <Grid
@@ -77,9 +78,9 @@ const AuthBar = (props) => {
             >
                 
                     <Grid item>
-                        Travel_app
+                        <Link to="/">Travel_app</Link>
+                        
                     </Grid>
-                    {/* <Divider/> */}
                     <Grid item>
                         <Button
                             variant="contained"

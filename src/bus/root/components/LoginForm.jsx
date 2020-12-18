@@ -1,4 +1,5 @@
 import React from 'react';
+import firebase from 'firebase'
 import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
@@ -39,6 +40,7 @@ const SignUpForm = () => {
             }}
             onSubmit={(values, {setSubmitting}) => {
                 store.dispatch(authActions.signIn(values))
+                firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION)
                 history.back()
             }}
         >

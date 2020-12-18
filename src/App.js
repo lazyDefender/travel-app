@@ -11,6 +11,11 @@ import { Routes } from './navigation'
 import { history } from './navigation/history'
 
 const App = () => {
+  firebase.auth().onAuthStateChanged(function(user) {
+    if (user) {
+      console.log('user: ', user)
+    }
+  });
   return (
     <ThemeProvider theme={theme}>
       <Provider store={store}>

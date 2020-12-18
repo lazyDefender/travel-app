@@ -7,7 +7,11 @@ import ToursListItem from './ToursListItem'
 
 const ToursList = ({tours}) => {
     return (
-        <Grid container direction="row">
+        <Grid 
+            container 
+            direction="row"
+            justify="space-between"
+        >
         {tours?.map((tour) => {
             return (
             <ToursListItem key={tour.id} {...tour}/>

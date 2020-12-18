@@ -19,30 +19,38 @@ import {MuiPickersUtilsProvider} from '@material-ui/pickers'
 import useCities from '../hooks/useCities' 
 import { store } from '../../../init/store'
 import { toursFilterActions } from '../../../redux/toursFilter/actions'
+import useToursFilterFormState from '../hooks/useToursFilterFormState'
 
 const ToursFilterForm = () => {
 
   const citiesRes = useCities()
-  const cities = citiesRes.data
-
+  const formState = useToursFilterFormState()
+  console.log('prev form state', formState)
+  const citiesData = citiesRes?.data || []
+  const cities = [ ...citiesData]
+  console.log('form cities', cities)
     return (
       <Box 
         // bgcolor="primary.main"
       >
         <Formik
     initialValues={{
-      toCity: 'Південний Мале Атол',
-      datetime: new Date(),
-      duration: 8,
-      adultsCount: 1,
-      kidsCount: 1,
+      toCity: formState?.toCity || cities[0],
+      datetime: formState?.datetime || new Date(),
+      duration: formState?.duration || 8,
+      adultsCount: formState?.adultsCount || 1,
+      kidsCount: formState?.kidsCount || 1,
     }}
     validate={(values) => {
       const errors = {}
+      if(!values.toCity) errors.toCity = 'Виберіть місто'
+      console.log(errors)
       return errors
     }}
     onSubmit={(values, {setSubmitting}) => {
+      setSubmitting(true)
       store.dispatch(toursFilterActions.fetchAsync(values))
+      store.dispatch(toursFilterActions.setFormState(values))
       setSubmitting(false)
     }}
   >

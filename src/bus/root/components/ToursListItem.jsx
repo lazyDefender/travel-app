@@ -9,6 +9,7 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Rating from '@material-ui/lab/Rating'
+import Tooltip from '@material-ui/core/Tooltip'
 import { Link } from 'react-router-dom'
 import { book } from '../../../navigation/book';
 
@@ -26,7 +27,8 @@ const ToursListItem = ({hotel, adultPrice, kidPrice}) => {
   const photoRef = photos ? photos[0].photo_reference : ''
   const finalPhotoSrc = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${photoRef}&key=${process.env.REACT_APP_API_KEY}`
   return (
-    <Grid item>
+    <Tooltip title={hotel.name} interactive arrow>
+      <Grid item>
       <Link to={`${book.hotels}/${id}`}>
         <Card className={classes.root}>
           <CardActionArea>
@@ -59,6 +61,7 @@ const ToursListItem = ({hotel, adultPrice, kidPrice}) => {
         </Card>
       </Link>
     </Grid>
+    </Tooltip>
   );
 }
 
