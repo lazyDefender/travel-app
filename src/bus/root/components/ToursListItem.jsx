@@ -36,6 +36,7 @@ const ToursListItem = ({hotel, adultPrice, kidPrice}) => {
               height="140"
               image={finalPhotoSrc}
               title={hotel.name}
+              onError={(e) => console.log('img error', e)}
             />
             <CardContent>
               <Typography noWrap gutterBottom variant="h5" component="h2">

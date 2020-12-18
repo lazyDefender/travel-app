@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Container, ThemeProvider } from '@material-ui/core'
+import { Container, CssBaseline, ThemeProvider } from '@material-ui/core'
 import { Provider } from 'react-redux'
 import { BrowserRouter as Router } from 'react-router-dom'
 import firebase from 'firebase'
@@ -15,6 +15,7 @@ const App = () => {
     <ThemeProvider theme={theme}>
       <Provider store={store}>
         <Router history={history}>
+          <CssBaseline/>
           <Container>
             <Routes/>
           </Container>
