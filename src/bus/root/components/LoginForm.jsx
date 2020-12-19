@@ -40,7 +40,6 @@ const SignUpForm = () => {
             }}
             onSubmit={(values, {setSubmitting}) => {
                 store.dispatch(authActions.signIn(values))
-                firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION)
                 history.back()
             }}
         >
