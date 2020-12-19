@@ -1,29 +1,37 @@
 import React from 'react'
-import { makeStyles } from '@material-ui/core/styles';
-import Grid from '@material-ui/core/Grid'
-import Card from '@material-ui/core/Card';
-import CardActionArea from '@material-ui/core/CardActionArea';
-import CardContent from '@material-ui/core/CardContent';
-import CardMedia from '@material-ui/core/CardMedia';
-import Typography from '@material-ui/core/Typography';
+import { makeStyles } from '@material-ui/core/styles'
 import Rating from '@material-ui/lab/Rating'
-import Tooltip from '@material-ui/core/Tooltip'
+import {
+  Grid,
+  Card,
+  CardActionArea,
+  CardContent,
+  CardMedia,
+  Typography,
+  Tooltip,
+} from '@material-ui/core'
 import { Link } from 'react-router-dom'
-import { book } from '../../../navigation/book';
+
+import { book } from '../../../navigation/book'
+import { getPhotoUri } from '../../../global/getPhotoUri'
 
 const useStyles = makeStyles({
   root: {
     maxWidth: 345,
   },
-});
+})
 
 const ToursListItem = ({hotel, adultPrice, kidPrice}) => {
     
-  const classes = useStyles();
+  const classes = useStyles()
 
   const { photos, rating, id } = hotel
   const photoRef = photos ? photos[0].photo_reference : ''
-  const finalPhotoSrc = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${photoRef}&key=${process.env.REACT_APP_API_KEY}`
+  const finalPhotoSrc = getPhotoUri({
+    maxwidth: 450,
+    photoRef,
+  })
+
   return (
     <Tooltip title={hotel.name} interactive arrow>
       <Grid item>
@@ -60,7 +68,7 @@ const ToursListItem = ({hotel, adultPrice, kidPrice}) => {
       </Link>
     </Grid>
     </Tooltip>
-  );
+  )
 }
 
 export default ToursListItem

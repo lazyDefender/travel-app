@@ -14,7 +14,7 @@ import {
   DatePicker,
 } from 'formik-material-ui-pickers'
 import MomentUtils from '@date-io/moment'
-import {MuiPickersUtilsProvider} from '@material-ui/pickers'
+import { MuiPickersUtilsProvider } from '@material-ui/pickers'
 
 import useCities from '../hooks/useCities' 
 import { store } from '../../../init/store'
