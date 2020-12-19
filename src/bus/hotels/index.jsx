@@ -1,7 +1,5 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
-import { Link } from 'react-router-dom'
 import {
     Backdrop,
     CircularProgress,
@@ -12,7 +10,6 @@ import HotelMain from './components/HotelMain'
 import useHotel from './hooks/useHotel'
 import useToursByHotel from './hooks/useToursByHotel'
 import GoogleMap from './components/GoogleMap'
-import { book } from '../../navigation/book'
 import AuthBar from '../../global/components/AuthBar'
 
 

@@ -1,17 +1,13 @@
 import React from 'react'
 import {
     Card,
-    CardActionArea,
     CardMedia,
     CardContent,
     Typography,
-    CardActions,
-    Button,
 } from '@material-ui/core'
-import Rating from '@material-ui/lab/Rating'
+import { Rating } from '@material-ui/lab'
 
-import useHotel from '../hooks/useHotel'
-
+import { getPhotoUri } from '../../../global/getPhotoUri'
 
 const HotelMain = ({hotel}) => {
     const {
@@ -23,8 +19,10 @@ const HotelMain = ({hotel}) => {
         photos,
     } = hotel || {}
     const {photo_reference} = photos ? photos[0] : {}
-    const photoUri = 
-    `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${photo_reference}&key=${process.env.REACT_APP_API_KEY}`
+    const photoUri = getPhotoUri({
+        photoRef: photo_reference,
+        maxwidth: 1000,
+    })
     return (
         <Card>
             <CardMedia

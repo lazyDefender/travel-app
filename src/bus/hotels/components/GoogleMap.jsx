@@ -1,11 +1,8 @@
-import React, { useRef, useEffect, useState } from 'react'
+import React, { useRef, useState } from 'react'
 import {Map, Marker, GoogleApiWrapper} from 'google-maps-react'
 
 const MapContainer = (props) => {
   const mapContainer = useRef(null)
-  useEffect(() => {
-    // window.scrollTo(0, 0)
-  }, [])
   const [visible, setVisible] = useState()
     return (
       <div id='googleMaps' ref={mapContainer}>
