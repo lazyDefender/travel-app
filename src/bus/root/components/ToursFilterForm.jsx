@@ -25,10 +25,8 @@ const ToursFilterForm = () => {
 
   const citiesRes = useCities()
   const formState = useToursFilterFormState()
-  console.log('prev form state', formState)
   const citiesData = citiesRes?.data || []
   const cities = [ ...citiesData]
-  console.log('form cities', cities)
     return (
       <Box 
         // bgcolor="primary.main"
@@ -44,7 +42,6 @@ const ToursFilterForm = () => {
     validate={(values) => {
       const errors = {}
       if(!values.toCity) errors.toCity = 'Виберіть місто'
-      console.log(errors)
       return errors
     }}
     onSubmit={(values, {setSubmitting}) => {

@@ -13,8 +13,7 @@ import Rating from '@material-ui/lab/Rating'
 import useHotel from '../hooks/useHotel'
 
 
-const HotelMain = ({id}) => {
-    const hotel = useHotel(id)
+const HotelMain = ({hotel}) => {
     const {
         name,
         description,
@@ -23,7 +22,7 @@ const HotelMain = ({id}) => {
         rating,
         photos,
     } = hotel || {}
-    const {photo_reference} = photos ? photos[0]: {}
+    const {photo_reference} = photos ? photos[0] : {}
     const photoUri = 
     `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${photo_reference}&key=${process.env.REACT_APP_API_KEY}`
     return (
@@ -32,7 +31,7 @@ const HotelMain = ({id}) => {
                 component="img"
                 alt={name}
                 height="140"
-                image={photoUri}
+                image={photo_reference ? photoUri : ''}
                 title={name}
             />
             <CardContent>

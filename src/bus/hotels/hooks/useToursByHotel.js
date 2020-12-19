@@ -5,7 +5,7 @@ const useToursByHotel = (hotelId) => {
     const dispatch = useDispatch()
     useEffect(() => {
         dispatch(toursActions.fetchByHotel(hotelId))
-    }, [])
+    }, [dispatch])
     const tours = useSelector(state => state.tours.data || [])
     return tours
 }

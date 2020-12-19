@@ -6,8 +6,8 @@ const useHotel = (id) => {
     const dispatch = useDispatch()
     useEffect(() => {
         dispatch(hotelActions.fetchById(id))
-    }, [])
-    const hotel = useSelector(state => state.hotel.data)
+    }, [dispatch])
+    const hotel = useSelector(state => state.hotel)
     return hotel
 }
 

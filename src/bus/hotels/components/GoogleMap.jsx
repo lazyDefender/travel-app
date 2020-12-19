@@ -3,7 +3,6 @@ import {Map, Marker, GoogleApiWrapper} from 'google-maps-react'
 
 const MapContainer = (props) => {
   const mapContainer = useRef(null)
-  console.dir(mapContainer?.current?.clientWidth)
   useEffect(() => {
     // window.scrollTo(0, 0)
   }, [])
