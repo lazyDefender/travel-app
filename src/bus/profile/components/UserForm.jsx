@@ -11,8 +11,8 @@ import MomentUtils from '@date-io/moment'
 import {MuiPickersUtilsProvider} from '@material-ui/pickers'
 
 import { store } from '../../../init/store'
-import { profileActions } from '../../../redux/profile/actions'
 import useAuth from '../../../global/hooks/useAuth'
+import { authActions } from '../../../redux/auth/actions'
 
 
 const UserForm = () => {
@@ -28,7 +28,7 @@ const UserForm = () => {
                 return errors
             }}
             onSubmit={(values, {setSubmitting}) => {
-                store.dispatch(profileActions.updateUser({
+                store.dispatch(authActions.updateUser({
                     ...values,
                     id,
                 }))
