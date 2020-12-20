@@ -1,6 +1,3 @@
-import firebase from 'firebase'
-// Api
-import { api } from '../../api';
 // Types
 import { types } from './types';
 // Fire
@@ -100,6 +97,8 @@ export const reservationActions = Object.freeze({
             tourId,
             userId,
         } = order
+
+        console.log('order:', order)
 
         const userRef = await fire
             .firestore()
