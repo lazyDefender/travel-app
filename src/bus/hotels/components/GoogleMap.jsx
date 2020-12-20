@@ -1,10 +1,19 @@
-import React from 'react';
-import {Map, Marker, GoogleApiWrapper} from 'google-maps-react';
+import React, { useRef, useState } from 'react'
+import {Map, Marker, GoogleApiWrapper} from 'google-maps-react'
 
 const MapContainer = (props) => {
+  const mapContainer = useRef(null)
+  const [visible, setVisible] = useState()
     return (
-      <div id='googleMaps'>
+      <div id='googleMaps' ref={mapContainer}>
         <Map 
+          style={{
+            width: mapContainer?.current?.clientWidth
+          }}
+          onReady={() => {setVisible(true)}}
+          visible={visible}
+          className="map"
+          resetBoundsOnResize={true}
           google={props.google}
           initialCenter={{
             "lat": props.location?.lat,

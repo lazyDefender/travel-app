@@ -38,7 +38,53 @@ export const toursFilterActions = Object.freeze({
         }
     },
 
+    setFormState: (state) => {
+        return {
+            type: types.TOURS_FILTER_SET_FORM_STATE,
+            payload: state,
+        }
+    },
+
     //Async
+    fetchAll: (limit = 20) => async (dispatch) => {
+        dispatch(toursFilterActions.startFetching())
+        const toursResponse = await fire
+            .firestore()
+            .collection('tours')
+            .limit(limit)
+            .get()
+        const toursDocs = toursResponse.docs
+        const tours = toursDocs.map(doc => {
+            return {
+                id: doc.id,
+                ...doc.data(),
+            }
+        })
+        
+        const hotelIds = tours.map(t => t.hotel.id)
+        const hotels = []
+        for(let hotelId of hotelIds) {
+            const hotelDoc = await fire
+            .firestore()
+            .collection('hotels')
+            .doc(hotelId)
+            .get()
+            const hotel = {
+                id: hotelDoc.id,
+                ...hotelDoc.data(),
+            }
+            hotels.push(hotel)
+        }
+
+        const finalTours = tours.map(t => ({
+            ...t,
+            hotel: hotels.find(h => h.id === t.hotel.id)
+        }))
+
+        dispatch(toursFilterActions.fill(finalTours))
+        dispatch(toursFilterActions.stopFetching())
+    },
+
     fetchAsync: (filters) => async (dispatch) => {
         const {
             toCity,

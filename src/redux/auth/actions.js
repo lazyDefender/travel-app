@@ -47,18 +47,17 @@ export const authActions = Object.freeze({
         const authRes = await fire
             .auth()
             .createUserWithEmailAndPassword(email, password)
+        // console.log('signup res:',authRes)
         const { uid } = authRes.user
         const newUser = {
             firstName,
             lastName,
-            userAuthID: uid,
+            authID: uid,
         }
         const userRes = await fire
             .firestore()
             .collection('users')
             .add(newUser)
-        console.log('authRes',authRes)
-        console.log('userRes', userRes)
         dispatch(authActions.fill(newUser))
         dispatch(authActions.stopFetching())
     },
@@ -72,12 +71,12 @@ export const authActions = Object.freeze({
         const authRes = await fire
             .auth()
             .signInWithEmailAndPassword(email, password)
-        console.log('signin auth res:', authRes)
+        // console.log('signin auth res:', authRes)
         const { uid } = authRes.user
         const userRes = await fire
             .firestore()
             .collection('users')
-            .where('userID', '==', uid)
+            .where('authID', '==', uid)
             .get()
         const userDoc = userRes.docs[0]
         const userData = {
@@ -88,9 +87,49 @@ export const authActions = Object.freeze({
         dispatch(authActions.stopFetching())
     },
 
+    getUserDataByUID: (uid) => async (dispatch) => {
+        dispatch(authActions.startFetching())
+        const userRes = await fire
+            .firestore()
+            .collection('users')
+            .where('authID', '==', uid)
+            .get()
+        const userDoc = userRes.docs[0]
+        const { id } = userDoc
+        const userData = {
+            id,
+            ...userDoc.data(),
+            authID: uid,
+        }
+        dispatch(authActions.fill(userData))
+        dispatch(authActions.stopFetching())
+    },
+
     signOut: () => async (dispatch) => {
         await fire.auth().signOut()
-        store.dispatch(authActions.fill(null))
+        dispatch(authActions.fill(null))
+    },
+
+    updateUser: (user) => async (dispatch) => {
+        dispatch(authActions.startFetching())
+        const {
+            id,
+            firstName,
+            lastName,
+        } = user
+        const userRef = await fire
+            .firestore()
+            .collection('users')
+            .doc(user.id)
+        const userDoc = await userRef.get()
+        const updatedUser = {
+            ...userDoc.data(),
+            firstName,
+            lastName,
+        }
+        const result = await userRef.update(updatedUser)
+        dispatch(authActions.fill(updatedUser))
+        dispatch(authActions.stopFetching())
     },
 
     fetchAsync: (id) => async (dispatch) => {

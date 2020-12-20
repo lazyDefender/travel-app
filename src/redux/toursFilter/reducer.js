@@ -2,6 +2,7 @@ import {types} from './types';
 
 const initialState = {
     data: null,
+    formState: null,
     isFetching: false,
     error: null,
 };
@@ -32,6 +33,12 @@ export const toursFilterReducer = (state = initialState, {type, payload}) => {
             ...state,
             data: payload,
             error: null,
+        }
+
+        case types.TOURS_FILTER_SET_FORM_STATE:
+        return {
+            ...state,
+            formState: payload,
         }
 
         default: 

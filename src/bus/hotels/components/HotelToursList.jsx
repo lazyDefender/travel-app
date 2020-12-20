@@ -32,7 +32,7 @@ const HotelToursList = ({tours}) => {
                 <TableCell align="center">{tour.adultPrice}$</TableCell>
                 <TableCell align="center">{tour.kidPrice}$</TableCell>
                 <TableCell align="center">
-                  <Button>
+                  <Button color="primary" variant="contained">
                     <Link to={`${book.reservation}?tourId=${encodeURIComponent(tour.id)}`}>
                         Забронювати
                     </Link>

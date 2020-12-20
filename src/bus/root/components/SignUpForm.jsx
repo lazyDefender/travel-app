@@ -1,26 +1,26 @@
-import React from 'react';
-import Dialog from '@material-ui/core/Dialog';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import {Formik, Form, Field} from 'formik';
+import React from 'react'
+import Dialog from '@material-ui/core/Dialog'
+import DialogContent from '@material-ui/core/DialogContent'
+import DialogTitle from '@material-ui/core/DialogTitle'
+import {Formik, Form, Field} from 'formik'
 import {
   Button,
   Box
-} from '@material-ui/core';
+} from '@material-ui/core'
 import {
   TextField,
-} from 'formik-material-ui';
-import MomentUtils from '@date-io/moment';
-import {MuiPickersUtilsProvider} from '@material-ui/pickers';
+} from 'formik-material-ui'
+import MomentUtils from '@date-io/moment'
+import { MuiPickersUtilsProvider } from '@material-ui/pickers'
 
 import { store } from '../../../init/store'
-import { authActions } from '../../../redux/auth/actions';
+import { authActions } from '../../../redux/auth/actions'
 import { history } from '../../../navigation/history'
 
 
 
 const SignUpForm = () => {
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = React.useState(true)
 
   return (
     <div>
@@ -35,8 +35,8 @@ const SignUpForm = () => {
                 lastName: '',
             }}
             validate={(values) => {
-                const errors = {};
-                return errors;
+                const errors = {}
+                return errors
             }}
             onSubmit={(values, {setSubmitting}) => {
                 store.dispatch(authActions.createUser(values))
@@ -93,11 +93,11 @@ const SignUpForm = () => {
             </Form>
         </MuiPickersUtilsProvider>
         )}
-    </Formik>
-    </DialogContent>
+      </Formik>
+      </DialogContent>
       </Dialog>
     </div>
-  );
+  )
 }
 
 export default SignUpForm

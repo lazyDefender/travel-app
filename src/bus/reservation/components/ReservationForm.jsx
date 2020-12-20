@@ -1,22 +1,22 @@
-import React from 'react';
-import {Formik, Form, Field} from 'formik';
+import React from 'react'
+import {Formik, Form, Field} from 'formik'
 import {
   Button,
   Box
-} from '@material-ui/core';
+} from '@material-ui/core'
 import {
   TextField,
-} from 'formik-material-ui';
+} from 'formik-material-ui'
 import {
   DatePicker,
-} from 'formik-material-ui-pickers';
-import MomentUtils from '@date-io/moment';
-import {MuiPickersUtilsProvider} from '@material-ui/pickers'
+} from 'formik-material-ui-pickers'
+import MomentUtils from '@date-io/moment'
+import { MuiPickersUtilsProvider } from '@material-ui/pickers'
 
 import { store } from '../../../init/store'
 import useTour from '../hooks/useTour'
-import { reservationActions } from '../../../redux/reservation/actions';
-import { useSelector } from 'react-redux';
+import { reservationActions } from '../../../redux/reservation/actions'
+import { useSelector } from 'react-redux'
 import { history } from '../../../navigation/history'
 
 const disableBookedDays = (date) => {
@@ -48,8 +48,8 @@ const ReservationForm = ({tourId}) => {
         kidsCount: 1,
       }}
       validate={(values) => {
-        const errors = {};
-        return errors;
+        const errors = {}
+        return errors
       }}
       onSubmit={(values, {setSubmitting}) => {
         store.dispatch(reservationActions.saveOrderAsync({

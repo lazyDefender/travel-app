@@ -1,18 +1,18 @@
 import React from 'react'
-import {Formik, Form, Field} from 'formik';
+import {Formik, Form, Field} from 'formik'
 import {
     Button,
     Box,
-} from '@material-ui/core';
+} from '@material-ui/core'
 import {
   TextField,
-} from 'formik-material-ui';
-import MomentUtils from '@date-io/moment';
-import {MuiPickersUtilsProvider} from '@material-ui/pickers';
+} from 'formik-material-ui'
+import MomentUtils from '@date-io/moment'
+import {MuiPickersUtilsProvider} from '@material-ui/pickers'
 
 import { store } from '../../../init/store'
-import { profileActions } from '../../../redux/profile/actions';
 import useAuth from '../../../global/hooks/useAuth'
+import { authActions } from '../../../redux/auth/actions'
 
 
 const UserForm = () => {
@@ -24,11 +24,11 @@ const UserForm = () => {
                 lastName: '',
             }}
             validate={(values) => {
-                const errors = {};
-                return errors;
+                const errors = {}
+                return errors
             }}
             onSubmit={(values, {setSubmitting}) => {
-                store.dispatch(profileActions.updateUser({
+                store.dispatch(authActions.updateUser({
                     ...values,
                     id,
                 }))

@@ -1,20 +1,15 @@
 import React from 'react'
 import {
     Card,
-    CardActionArea,
     CardMedia,
     CardContent,
     Typography,
-    CardActions,
-    Button,
 } from '@material-ui/core'
-import Rating from '@material-ui/lab/Rating'
+import { Rating } from '@material-ui/lab'
 
-import useHotel from '../hooks/useHotel'
+import { getPhotoUri } from '../../../global/getPhotoUri'
 
-
-const HotelMain = ({id}) => {
-    const hotel = useHotel(id)
+const HotelMain = ({hotel}) => {
     const {
         name,
         description,
@@ -23,33 +18,33 @@ const HotelMain = ({id}) => {
         rating,
         photos,
     } = hotel || {}
-    const {photo_reference} = photos ? photos[0]: {}
-    const photoUri = 
-    `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${photo_reference}&key=${process.env.REACT_APP_API_KEY}`
+    const {photo_reference} = photos ? photos[0] : {}
+    const photoUri = getPhotoUri({
+        photoRef: photo_reference,
+        maxwidth: 1000,
+    })
     return (
         <Card>
-            <CardActionArea>
-                <CardMedia
-                    component="img"
-                    alt="Contemplative Reptile"
-                    height="140"
-                    image={photoUri}
-                    title="Contemplative Reptile"
-                />
-                <CardContent>
+            <CardMedia
+                component="img"
+                alt={name}
+                height="140"
+                image={photo_reference ? photoUri : ''}
+                title={name}
+            />
+            <CardContent>
                 <Typography gutterBottom variant="h5" component="h2">
                     {name}
                 </Typography>
                 <Typography variant="body2" color="textSecondary" component="p">
                     {description}
                 </Typography>
-                </CardContent>
                 <Rating
                     name="simple-controlled"
                     value={rating || 0}
                     disabled
                 />
-            </CardActionArea>
+            </CardContent>
         </Card>
     )
 }

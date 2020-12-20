@@ -1,63 +1,65 @@
-import React from 'react';
-import {Formik, Form, Field} from 'formik';
+import React from 'react'
+import {Formik, Form, Field} from 'formik'
 import {
   Button,
   LinearProgress,
   MenuItem,
   Grid,
   Box,
-} from '@material-ui/core';
+} from '@material-ui/core'
 import {
   TextField,
-} from 'formik-material-ui';
+} from 'formik-material-ui'
 import {
   DatePicker,
-} from 'formik-material-ui-pickers';
-import MomentUtils from '@date-io/moment';
-import {MuiPickersUtilsProvider} from '@material-ui/pickers';
+} from 'formik-material-ui-pickers'
+import MomentUtils from '@date-io/moment'
+import { MuiPickersUtilsProvider } from '@material-ui/pickers'
 
 import useCities from '../hooks/useCities' 
 import { store } from '../../../init/store'
 import { toursFilterActions } from '../../../redux/toursFilter/actions'
+import useToursFilterFormState from '../hooks/useToursFilterFormState'
 
 const ToursFilterForm = () => {
 
   const citiesRes = useCities()
-  const cities = citiesRes.data
-  const countries = new Set(cities?.map(city => city.country))
-  const countriesTo = []
-
-  for(let country of countries) {
-    const citiesByCountry = cities.filter(city => city.country === country)
-    countriesTo.push({
-      country,
-      cities: citiesByCountry,
-    })
-  }
-
+  const formState = useToursFilterFormState()
+  const citiesData = citiesRes?.data || []
+  const cities = [ ...citiesData]
     return (
-      <>
+      <Box 
+        // bgcolor="primary.main"
+      >
         <Formik
     initialValues={{
-      toCity: 'Південний Мале Атол',
-      datetime: new Date(),
-      duration: 8,
-      adultsCount: 1,
-      kidsCount: 1,
+      toCity: formState?.toCity || cities[0],
+      datetime: formState?.datetime || new Date(),
+      duration: formState?.duration || 8,
+      adultsCount: formState?.adultsCount || 1,
+      kidsCount: formState?.kidsCount || 1,
     }}
     validate={(values) => {
-      const errors = {};
-      return errors;
+      const errors = {}
+      if(!values.toCity) errors.toCity = 'Виберіть місто'
+      return errors
     }}
     onSubmit={(values, {setSubmitting}) => {
+      setSubmitting(true)
       store.dispatch(toursFilterActions.fetchAsync(values))
-      setSubmitting(false);
+      store.dispatch(toursFilterActions.setFormState(values))
+      setSubmitting(false)
     }}
   >
     {({submitForm, isSubmitting, touched, errors}) => (
       <MuiPickersUtilsProvider utils={MomentUtils}>
         <Form>
-          <Grid container direction="row" alignItems="center">
+          <Grid 
+            container 
+            direction="row" 
+            alignItems="center"
+            justify="space-between"
+          >
           
           {isSubmitting && <LinearProgress />}
           
@@ -69,8 +71,7 @@ const ToursFilterForm = () => {
                 name="toCity"
                 label="Куди"
                 select
-                variant="standard"
-                margin="normal"
+                variant="outlined"
                 InputLabelProps={{
                   shrink: true,
                 }}
@@ -86,7 +87,13 @@ const ToursFilterForm = () => {
           
           <Grid item>
             <Box margin={1}>
-              <Field component={DatePicker} disablePast={true} name="datetime" label="Початок туру" />
+              <Field 
+                component={DatePicker} 
+                inputVariant="outlined"
+                disablePast={true} 
+                name="datetime" 
+                label="Початок туру" 
+              />
             </Box>
           </Grid>
           
@@ -98,8 +105,7 @@ const ToursFilterForm = () => {
                 name="duration"
                 label="Ночей"
                 select
-                variant="standard"
-                margin="normal"
+                variant="outlined"
                 InputLabelProps={{
                   shrink: true,
                 }}
@@ -114,6 +120,7 @@ const ToursFilterForm = () => {
             <Box margin={1}>
               <Field
                 component={TextField}
+                variant="outlined"
                 name="adultsCount"
                 type="number"
                 label="К-сть дорослих"
@@ -129,6 +136,7 @@ const ToursFilterForm = () => {
             <Box margin={1}>
               <Field
                 component={TextField}
+                variant="outlined"
                 name="kidsCount"
                 type="number"
                 label="К-сть дітей"
@@ -143,6 +151,7 @@ const ToursFilterForm = () => {
           <Box margin={1}>
             <Button
               variant="contained"
+              disableElevation
               color="primary"
               disabled={isSubmitting}
               onClick={submitForm}
@@ -155,7 +164,7 @@ const ToursFilterForm = () => {
       </MuiPickersUtilsProvider>
     )}
   </Formik>
-  </>
+  </Box>
     )
 }
 
