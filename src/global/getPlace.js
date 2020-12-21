@@ -1,7 +1,5 @@
 import axios from 'axios'
-const cors =  ''
-// `https://cors-anywhere.herokuapp.com/`
-const uri = `${cors}https://maps.googleapis.com/maps/api/place/findplacefromtext/json`
+const uri = `https://murmuring-island-03057.herokuapp.com/place`
 
 export const getPlace = async (name) => {
     const params = {
