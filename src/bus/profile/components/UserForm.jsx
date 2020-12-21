@@ -16,12 +16,16 @@ import { authActions } from '../../../redux/auth/actions'
 
 
 const UserForm = () => {
-    const { id } = useAuth() || {}
+    const { 
+        id,
+        firstName,
+        lastName,
+    } = useAuth() || {}
     return <>
         <Formik
             initialValues={{
-                firstName: '',
-                lastName: '',
+                firstName,
+                lastName,
             }}
             validate={(values) => {
                 const errors = {}
@@ -36,7 +40,6 @@ const UserForm = () => {
         >
         {({submitForm, isSubmitting, touched, errors}) => (
         <MuiPickersUtilsProvider utils={MomentUtils}>
-            Змінити дані користувача
             <Form>
                 <Box margin={1}>
                     <Field
