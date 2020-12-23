@@ -23,6 +23,8 @@ import { authActions } from '../../../redux/auth/actions'
 import { history } from '../../../navigation/history'
 import useAuth from '../../../global/hooks/useAuth'
 import { book } from '../../../navigation/book'
+import { initialValues } from '../initialValues/signUp'
+import { validationSchema } from '../validation/signUp'
 
 
 const SignUpForm = () => {
@@ -33,22 +35,15 @@ const SignUpForm = () => {
     <DialogTitle id="form-dialog-title">Зареєструватись</DialogTitle>
     <DialogContent>
     <Formik
-        initialValues={{
-            email: '',
-            password: '',
-            firstName: '',
-            lastName: '',
-        }}
-        validate={(values) => {
-            const errors = {}
-            return errors
-        }}
-        onSubmit={(values, {setSubmitting}) => {
+        initialValues={initialValues}
+        validationSchema={validationSchema}
+        onSubmit={(values, { setSubmitting }) => {
             store.dispatch(authActions.createUser(values))
             history.back()
         }}
     >
     {({submitForm, isSubmitting, touched, errors}) => (
+    
     <MuiPickersUtilsProvider utils={MomentUtils}>
         <Form>
             <Box margin={1}>

@@ -23,6 +23,8 @@ import { authActions } from '../../../redux/auth/actions'
 import { history } from '../../../navigation/history'
 import { book } from '../../../navigation/book'
 import useAuth from '../../../global/hooks/useAuth'
+import { initialValues } from '../initialValues/signIn'
+import { validationSchema } from '../validation/signIn'
 
 
 
@@ -34,15 +36,9 @@ const SignUpForm = () => {
     <DialogTitle id="form-dialog-title">Вхід</DialogTitle>
     <DialogContent>
     <Formik
-        initialValues={{
-            email: '',
-            password: '',
-        }}
-        validate={(values) => {
-            const errors = {}
-            return errors
-        }}
-        onSubmit={(values, {setSubmitting}) => {
+        initialValues={initialValues}
+        validationSchema={validationSchema}
+        onSubmit={(values, { setSubmitting }) => {
             store.dispatch(authActions.signIn(values))
             history.back()
         }}
