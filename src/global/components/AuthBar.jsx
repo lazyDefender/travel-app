@@ -42,7 +42,7 @@ const AuthBar = (props) => {
             >
                 
                     <Grid item>
-                        <Link to="/">Travel_app</Link>
+                        <Link to="/">Travel App</Link>
                     </Grid>
                     <Grid item>
                         <Button
@@ -78,7 +78,7 @@ const AuthBar = (props) => {
             >
                 
                     <Grid item>
-                        <Link to="/">Travel_app</Link>
+                        <Link to="/">Travel App</Link>
                         
                     </Grid>
                     <Grid item>

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import {
     Card,
     CardMedia,
@@ -8,6 +8,7 @@ import {
 import { Rating } from '@material-ui/lab'
 
 import { getPhotoUri } from '../../../global/getPhotoUri'
+import ImageWithFallback from '../../../global/components/ImageWithFallback'
 
 const HotelMain = ({hotel}) => {
     const {
@@ -18,19 +19,32 @@ const HotelMain = ({hotel}) => {
         rating,
         photos,
     } = hotel || {}
+    
+    const [image, setImage] = useState(null)
+    
     const {photo_reference} = photos ? photos[0] : {}
-    const photoUri = getPhotoUri({
-        photoRef: photo_reference,
-        maxwidth: 1000,
-    })
+
+    useEffect(() => {
+        const photoUri = getPhotoUri({
+            photoRef: photo_reference,
+            maxwidth: 1000,
+        })
+        setImage(photoUri)
+    }, [photo_reference])
+
+    const onImageError = (e) => {
+        setImage(`${process.env.PUBLIC_URL}/image-not-found.svg`)
+        console.log('on image error')
+    }
+
     return (
         <Card>
-            <CardMedia
-                component="img"
-                alt={name}
-                height="140"
-                image={photo_reference ? photoUri : ''}
-                title={name}
+            <ImageWithFallback
+              image={image}
+              alt={name}
+              title={name}
+              onError={onImageError}
+              height="300"
             />
             <CardContent>
                 <Typography gutterBottom variant="h5" component="h2">

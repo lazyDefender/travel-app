@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import Rating from '@material-ui/lab/Rating'
 import {
@@ -11,26 +11,40 @@ import {
   Tooltip,
 } from '@material-ui/core'
 import { Link } from 'react-router-dom'
+import classnames from 'classnames'
 
 import { book } from '../../../navigation/book'
 import { getPhotoUri } from '../../../global/getPhotoUri'
+import ImageWithFallback from '../../../global/components/ImageWithFallback'
 
 const useStyles = makeStyles({
   root: {
     maxWidth: 345,
+  },
+  cardMedia: {
+        objectFit: 'contain',
   },
 })
 
 const ToursListItem = ({hotel, adultPrice, kidPrice}) => {
     
   const classes = useStyles()
+  const [image, setImage] = useState(null)
 
   const { photos, rating, id } = hotel
   const photoRef = photos ? photos[0].photo_reference : ''
-  const finalPhotoSrc = getPhotoUri({
-    maxwidth: 450,
-    photoRef,
-  })
+
+  useEffect(() => {
+    const finalPhotoSrc = getPhotoUri({
+      maxwidth: 450,
+      photoRef,
+    })
+    setImage(finalPhotoSrc)
+  }, [photoRef])
+  
+  const onImageError = (e) => {
+    setImage(`${process.env.PUBLIC_URL}/image-not-found.svg`)
+  }
 
   return (
     <Tooltip title={hotel.name} interactive arrow>
@@ -38,13 +52,12 @@ const ToursListItem = ({hotel, adultPrice, kidPrice}) => {
       <Link to={`${book.hotels}/${id}`}>
         <Card className={classes.root}>
           <CardActionArea>
-            <CardMedia
-              component="img"
+            <ImageWithFallback
+              image={image}
               alt={hotel.name}
-              height="140"
-              image={finalPhotoSrc}
               title={hotel.name}
-              onError={(e) => console.log('img error', e)}
+              onError={onImageError}
+              height="140"
             />
             <CardContent>
               <Typography noWrap gutterBottom variant="h5" component="h2">
