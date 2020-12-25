@@ -28,7 +28,7 @@ const HotelMain = ({hotel}) => {
             <CardMedia
                 component="img"
                 alt={name}
-                height="140"
+                height="300"
                 image={photo_reference ? photoUri : ''}
                 title={name}
             />
