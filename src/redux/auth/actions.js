@@ -94,6 +94,7 @@ export const authActions = Object.freeze({
             .collection('users')
             .where('authID', '==', uid)
             .get()
+            
         const userDoc = userRes.docs[0]
         const { id } = userDoc
         const userData = {
@@ -102,7 +103,7 @@ export const authActions = Object.freeze({
             authID: uid,
         }
         dispatch(authActions.fill(userData))
-        dispatch(authActions.stopFetching())
+        dispatch(authActions.stopFetching())        
     },
 
     signOut: () => async (dispatch) => {

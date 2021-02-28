@@ -15,12 +15,11 @@ import useAuth from '../../../global/hooks/useAuth'
 import { authActions } from '../../../redux/auth/actions'
 
 
-const UserForm = () => {
-    const { 
+const UserForm = ({ 
         id,
         firstName,
         lastName,
-    } = useAuth() || {}
+    }) => {
     return <>
         <Formik
             initialValues={{

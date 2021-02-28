@@ -12,25 +12,25 @@ const OrdersList = ({orders}) => {
     const listJSX = <Grid container spacing={3}>
             {orders?.map(o =>  <OrdersListItem order={o} key={o.id} />)}
         </Grid>
-    return orders?.length ? {listJSX} : <div>
-    <Grid 
-        container
-        direction="column"
-        alignItems="center"
-        justify="center"
-    >
-        <Grid item>
-            <Cancel/>
-        </Grid>
-        <Grid item>
-            <Typography>
-                Ще немає замовлень
-            </Typography>
-        </Grid>
-    </Grid>
     
-    
-</div>
+    const emptyJSX = <div>
+        <Grid 
+            container
+            direction="column"
+            alignItems="center"
+            justify="center"
+        >
+            <Grid item>
+                <Cancel/>
+            </Grid>
+            <Grid item>
+                <Typography>
+                    Ще немає замовлень
+                </Typography>
+            </Grid>
+        </Grid>  
+    </div>
+    return orders?.length ? listJSX : emptyJSX
 }
 
 export default OrdersList

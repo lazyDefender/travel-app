@@ -25,7 +25,7 @@ const Profile = (props) => {
 
     const { isFetching } = useSelector(state => state.orders || {})
     const auth = useAuth()
-    const id = auth?.id
+    const id = auth?.data.id
     const orders = useOrdersByUser(id)
     const ordersJSX = isFetching ? <CircularProgress/> : <OrdersList orders={orders}/>
     const tabsJSX = <Tabs
@@ -42,7 +42,7 @@ const Profile = (props) => {
 
     switch(value) {
         case 0:
-            tabContentJSX = <UserForm/>
+            tabContentJSX = <UserForm {...auth.data}/>
             break
         case 1:
             tabContentJSX = <>
@@ -57,8 +57,8 @@ const Profile = (props) => {
                     {tabsJSX}
                     {tabContentJSX}
                 </>
-    const content = auth ? page : <Redirect to={book.root}/>
-    return content
+                
+    return page
 }
 
 export default Profile

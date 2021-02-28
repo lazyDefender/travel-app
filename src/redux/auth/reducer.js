@@ -2,7 +2,7 @@ import {types} from './types';
 
 const initialState = {
     data: null,
-    isFetching: false,
+    isFetching: true,
     error: null,
 };
 

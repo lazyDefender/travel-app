@@ -103,10 +103,15 @@ const AuthBar = (props) => {
       </AppBar>
         
     </>
+
+    const loadingJSX = 'loing auth...'
+    const { data, isFetching } = auth
+    const authBarJSX = data ? signedInBar : defaultBar
+    const authBarContent = isFetching ? loadingJSX : authBarJSX 
     return <>
     {/* <Container> */}
         <Box pt={2} pb={2}>
-            {auth ? signedInBar : defaultBar}
+            {authBarContent}
             <div className={classes.offset}/>
         </Box>
     {/* </Container> */}
