@@ -108,7 +108,8 @@ const SignUpForm = () => {
   </DialogContent>
   </Dialog>
 </div>
-  const content = auth.data ? <Redirect to={book.root}/> : page 
+  const redirectTo = firstLoadedPage === '/signup' ? book.root : firstLoadedPage
+  const content = auth.data ? <Redirect to={redirectTo}/> : page 
   return <>
     {content}
   </>
