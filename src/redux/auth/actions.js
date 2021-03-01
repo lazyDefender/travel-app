@@ -5,6 +5,7 @@ import { types } from './types';
 // Fire
 import fire from '../../firebase'
 import { store } from '../../init/store';
+import firebase from 'firebase'
 
 export const authActions = Object.freeze({
     //Sync
@@ -131,6 +132,22 @@ export const authActions = Object.freeze({
         const result = await userRef.update(updatedUser)
         dispatch(authActions.fill(updatedUser))
         dispatch(authActions.stopFetching())
+    },
+
+    signInWithGoogle: () => (dispatch) => {
+        const provider = new firebase.auth.GoogleAuthProvider()
+        firebase.auth().signInWithPopup(provider)
+            .then(result => {
+                console.log(result)
+            })
+    },
+
+    signInWithFacebook: () => (dispatch) => {
+        const provider = new firebase.auth.FacebookAuthProvider()
+        firebase.auth().signInWithPopup(provider)
+            .then(result => {
+                console.log(result)
+            })
     },
 
     fetchAsync: (id) => async (dispatch) => {

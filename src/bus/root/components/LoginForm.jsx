@@ -1,15 +1,13 @@
 import React from 'react'
-import { Redirect } from 'react-router-dom'
+import { Redirect, useHistory } from 'react-router-dom'
 import {
   Formik, 
   Form, 
-  Field
+  Field,
 } from 'formik'
 import {
   Button,
-  Dialog,
-  DialogContent,
-  DialogTitle,
+  Typography,
 } from '@material-ui/core'
 import {
   TextField,
@@ -20,23 +18,29 @@ import Box from '@material-ui/core/Box'
 
 import { store } from '../../../init/store'
 import { authActions } from '../../../redux/auth/actions'
-import { history } from '../../../navigation/history'
+// import { history } from '../../../navigation/history'
 import { book } from '../../../navigation/book'
 import useAuth from '../../../global/hooks/useAuth'
 import { initialValues } from '../initialValues/signIn'
 import { validationSchema } from '../validation/signIn'
 import useFirstLoadedPage from '../../../global/hooks/useFirstLoadedPage'
+import GoHomeBar from '../../../global/components/GoHomeBar'
 
+const signInWithGoogle = () => {
+  store.dispatch(authActions.signInWithGoogle())
+}
 
+const signInWithFacebook = () => {
+  store.dispatch(authActions.signInWithFacebook())
+}
 
 const SignUpForm = () => {
+  const history = useHistory()
   const [open, setOpen] = React.useState(true)
   const auth = useAuth()
   const firstLoadedPage = useFirstLoadedPage()
-  const page = <div>
-  <Dialog open={open} aria-labelledby="form-dialog-title">
-    <DialogTitle id="form-dialog-title">Вхід</DialogTitle>
-    <DialogContent>
+  const formJSX = <div>
+    <Typography>Вхід</Typography>
     <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}
@@ -82,15 +86,47 @@ const SignUpForm = () => {
                 >
                 Увійти
                 </Button>
+                <Button
+                variant="contained"
+                color="default"
+                onClick={() => {
+                  history.replace('/signup')
+                }}
+                >
+                Зареєструватись
+                </Button>
+            </Box>
+            <Box margin={1}>
+                <Button
+                variant="contained"
+                color="primary"
+                onClick={signInWithGoogle}
+                >
+                Увійти через Google
+                </Button>
+            </Box>
+            <Box margin={1}>
+                <Button
+                variant="contained"
+                color="primary"
+                onClick={signInWithFacebook}
+                >
+                Увійти через Facebook
+                </Button>
+                
             </Box>
         </Form>
     </MuiPickersUtilsProvider>
     )}
     </Formik>
-  </DialogContent>
-</Dialog>
 </div>
+
   const redirectTo = firstLoadedPage === '/login' ? book.root : firstLoadedPage
+
+  const page = <>
+    <GoHomeBar/>
+    {formJSX}
+  </>
   const content = auth.data ? <Redirect to={redirectTo}/> : page 
   return <>
     {content}

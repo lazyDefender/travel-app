@@ -39,7 +39,9 @@ const App = () => {
   
   return (
     <ThemeProvider theme={theme}>
-        <Router history={history}>
+        <Router 
+        history={history}
+        >
           <CssBaseline/>
           <Container>
             {appJSX}

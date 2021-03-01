@@ -1,5 +1,5 @@
 import React from 'react'
-import { Redirect } from 'react-router-dom'
+import { Redirect, useHistory } from 'react-router-dom'
 import { 
   Formik, 
   Form, 
@@ -11,6 +11,7 @@ import {
   Dialog,
   DialogContent,
   DialogTitle,
+  Typography,
 } from '@material-ui/core'
 import {
   TextField,
@@ -20,22 +21,26 @@ import { MuiPickersUtilsProvider } from '@material-ui/pickers'
 
 import { store } from '../../../init/store'
 import { authActions } from '../../../redux/auth/actions'
-import { history } from '../../../navigation/history'
 import useAuth from '../../../global/hooks/useAuth'
 import { book } from '../../../navigation/book'
 import { initialValues } from '../initialValues/signUp'
 import { validationSchema } from '../validation/signUp'
 import useFirstLoadedPage from '../../../global/hooks/useFirstLoadedPage'
+import GoHomeBar from '../../../global/components/GoHomeBar'
 
+const styles = {
+  dialog: {
+    backgroundColor: "transparent"
+  }
+};
 
 const SignUpForm = () => {
+  const history = useHistory()
   const [open, setOpen] = React.useState(true)
   const auth = useAuth()
   const firstLoadedPage = useFirstLoadedPage()
-  const page = <div>
-  <Dialog open={open} aria-labelledby="form-dialog-title">
-    <DialogTitle id="form-dialog-title">Зареєструватись</DialogTitle>
-    <DialogContent>
+  const formJSX = <div>
+    <Typography>Зареєструватись</Typography>
     <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}
@@ -100,15 +105,26 @@ const SignUpForm = () => {
                 >
                 Готово
                 </Button>
+                <Button
+                variant="contained"
+                color="default"
+                onClick={() => {
+                  history.replace('/login')
+                }}
+                >
+                Увійти
+                </Button>
             </Box>
         </Form>
     </MuiPickersUtilsProvider>
     )}
   </Formik>
-  </DialogContent>
-  </Dialog>
 </div>
   const redirectTo = firstLoadedPage === '/signup' ? book.root : firstLoadedPage
+  const page = <>
+    <GoHomeBar/>
+    {formJSX}
+  </>
   const content = auth.data ? <Redirect to={redirectTo}/> : page 
   return <>
     {content}
