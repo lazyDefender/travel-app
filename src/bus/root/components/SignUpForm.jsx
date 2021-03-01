@@ -25,11 +25,13 @@ import useAuth from '../../../global/hooks/useAuth'
 import { book } from '../../../navigation/book'
 import { initialValues } from '../initialValues/signUp'
 import { validationSchema } from '../validation/signUp'
+import useFirstLoadedPage from '../../../global/hooks/useFirstLoadedPage'
 
 
 const SignUpForm = () => {
   const [open, setOpen] = React.useState(true)
   const auth = useAuth()
+  const firstLoadedPage = useFirstLoadedPage()
   const page = <div>
   <Dialog open={open} aria-labelledby="form-dialog-title">
     <DialogTitle id="form-dialog-title">Зареєструватись</DialogTitle>
@@ -39,7 +41,16 @@ const SignUpForm = () => {
         validationSchema={validationSchema}
         onSubmit={(values, { setSubmitting }) => {
             store.dispatch(authActions.createUser(values))
-            history.back()
+          
+            if(['/login', '/signup'].includes(firstLoadedPage)) {
+              history.replace('/')
+            }
+            else if(firstLoadedPage === '/profile') {
+              history.replace('/profile')
+            }
+            else {
+              history.back()
+            }
         }}
     >
     {({submitForm, isSubmitting, touched, errors}) => (

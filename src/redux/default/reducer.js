@@ -1,15 +1,15 @@
 import {types} from './types';
 
 const initialState = {
-    firstPageLoaded: null,
+    firstLoadedPage: null,
 };
 
 export const defaultReducer = (state = initialState, {type, payload}) => {
     switch(type) {
-        case types.SET_FIRST_PAGE_LOADED: 
+        case types.SET_FIRST_LOADED_PAGE: 
         return {
             ...state,
-            firstPageLoaded: payload,
+            firstLoadedPage: payload,
         };
 
         default: 

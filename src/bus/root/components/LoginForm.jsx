@@ -25,12 +25,14 @@ import { book } from '../../../navigation/book'
 import useAuth from '../../../global/hooks/useAuth'
 import { initialValues } from '../initialValues/signIn'
 import { validationSchema } from '../validation/signIn'
+import useFirstLoadedPage from '../../../global/hooks/useFirstLoadedPage'
 
 
 
 const SignUpForm = () => {
   const [open, setOpen] = React.useState(true)
   const auth = useAuth()
+  const firstLoadedPage = useFirstLoadedPage()
   const page = <div>
   <Dialog open={open} aria-labelledby="form-dialog-title">
     <DialogTitle id="form-dialog-title">Вхід</DialogTitle>
@@ -40,7 +42,16 @@ const SignUpForm = () => {
         validationSchema={validationSchema}
         onSubmit={(values, { setSubmitting }) => {
             store.dispatch(authActions.signIn(values))
-            history.back()
+            if(['/login', '/signup'].includes(firstLoadedPage)) {
+              history.replace('/')
+            }
+            else if(firstLoadedPage === '/profile') {
+              history.replace('/profile')
+            }
+            else {
+              history.back()
+            }
+            
         }}
     >
     {({submitForm, isSubmitting, touched, errors}) => (
@@ -79,7 +90,8 @@ const SignUpForm = () => {
   </DialogContent>
 </Dialog>
 </div>
-  const content = auth.data ? <Redirect to={book.root}/> : page 
+  const redirectTo = firstLoadedPage === '/login' ? book.root : firstLoadedPage
+  const content = auth.data ? <Redirect to={redirectTo}/> : page 
   return <>
     {content}
   </>

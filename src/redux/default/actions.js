@@ -8,9 +8,9 @@ import { store } from '../../init/store';
 
 export const defaultActions = Object.freeze({
     //Sync
-    setFirstPageLoaded: (payload) => {
+    setFirstLoadedPage: (payload) => {
         return {
-            type: types.SET_FIRST_PAGE_LOADED,
+            type: types.SET_FIRST_LOADED_PAGE,
             payload,
         }
     },

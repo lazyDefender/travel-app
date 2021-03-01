@@ -19,7 +19,7 @@ const App = () => {
     console.log('app use effect')
 
     const { pathname } = history.location
-    dispatch(defaultActions.setFirstPageLoaded(pathname))
+    dispatch(defaultActions.setFirstLoadedPage(pathname))
 
     firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)
     firebase.auth().onAuthStateChanged(function(user) {
@@ -33,7 +33,7 @@ const App = () => {
       }
       
     });
-  }, [dispatch, isFetching])
+  }, [dispatch])
 
   const appJSX = isFetching ?  'loading auth...' : <Routes />
   
