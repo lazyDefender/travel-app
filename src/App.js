@@ -9,6 +9,7 @@ import theme from './theme'
 import { Routes } from './navigation'
 import { history } from './navigation/history'
 import { authActions } from './redux/auth/actions'
+import { defaultActions } from './redux/default/actions'
 import useAuth from './global/hooks/useAuth'
 
 const App = () => {
@@ -16,6 +17,10 @@ const App = () => {
   const { data, isFetching } = useAuth()
   useEffect(() => {
     console.log('app use effect')
+
+    const { pathname } = history.location
+    dispatch(defaultActions.setFirstPageLoaded(pathname))
+
     firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)
     firebase.auth().onAuthStateChanged(function(user) {
       if (user) {
@@ -28,7 +33,7 @@ const App = () => {
       }
       
     });
-  }, [dispatch])
+  }, [dispatch, isFetching])
 
   const appJSX = isFetching ?  'loading auth...' : <Routes />
   
