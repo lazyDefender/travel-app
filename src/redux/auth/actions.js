@@ -36,9 +36,18 @@ export const authActions = Object.freeze({
         }
     },
 
+    setCreatedWithEmailAndPassword: (payload) => {
+        return {
+            type: types.SET_CREATED_WITH_EMAIL_AND_PASSWORD,
+            payload,
+        }
+    },
+
     //Async
-    createUser: (user) => async (dispatch) => {
+
+    createUserWithEmailAndPassword: (user) => async (dispatch) => {
         dispatch(authActions.startFetching())
+        dispatch(authActions.setCreatedWithEmailAndPassword(true))
         const {
             firstName,
             lastName,
@@ -53,14 +62,12 @@ export const authActions = Object.freeze({
         const newUser = {
             firstName,
             lastName,
-            authID: uid,
+            authIDs: [uid],
         }
-        const userRes = await fire
-            .firestore()
-            .collection('users')
-            .add(newUser)
+        await this.saveUser(newUser)
         dispatch(authActions.fill(newUser))
         dispatch(authActions.stopFetching())
+        dispatch(authActions.setCreatedWithEmailAndPassword(false))
     },
 
     signIn: (user) => async (dispatch) => {
@@ -72,18 +79,10 @@ export const authActions = Object.freeze({
         const authRes = await fire
             .auth()
             .signInWithEmailAndPassword(email, password)
-        // console.log('signin auth res:', authRes)
+
         const { uid } = authRes.user
-        const userRes = await fire
-            .firestore()
-            .collection('users')
-            .where('authID', '==', uid)
-            .get()
-        const userDoc = userRes.docs[0]
-        const userData = {
-            id: userDoc.id,
-            ...userDoc.data(),
-        }
+        const userData = await this.getUserDataByUID(uid)
+
         dispatch(authActions.fill(userData))
         dispatch(authActions.stopFetching())
     },
@@ -93,17 +92,20 @@ export const authActions = Object.freeze({
         const userRes = await fire
             .firestore()
             .collection('users')
-            .where('authID', '==', uid)
+            .where('authIDs', 'array-contains', uid)
             .get()
             
         const userDoc = userRes.docs[0]
-        const { id } = userDoc
-        const userData = {
-            id,
-            ...userDoc.data(),
-            authID: uid,
+        if(userDoc) {
+            const { id } = userDoc
+            const userData = {
+                id,
+                ...userDoc.data(),
+                authID: uid,
+            }
+            dispatch(authActions.fill(userData))
         }
-        dispatch(authActions.fill(userData))
+        
         dispatch(authActions.stopFetching())        
     },
 
@@ -134,20 +136,110 @@ export const authActions = Object.freeze({
         dispatch(authActions.stopFetching())
     },
 
-    signInWithGoogle: () => (dispatch) => {
+    signInWithGoogle: () => async (dispatch) => {
+        authActions.startFetching()
         const provider = new firebase.auth.GoogleAuthProvider()
-        firebase.auth().signInWithPopup(provider)
-            .then(result => {
-                console.log(result)
-            })
+        provider.addScope('email')
+        const result = await firebase.auth().signInWithPopup(provider)
+        
+        const {
+            uid,
+        } = result.user
+        const {
+            email,
+            family_name,
+            given_name,
+        } = result.additionalUserInfo.profile
+
+        const userRef = await fire
+            .firestore()
+            .collection('users')
+            .where('email', '==', email)
+
+        const usersRes = await userRef.get()
+        const userExists = !usersRes.empty
+
+        if(userExists) {
+            const doc = usersRes.docs[0]
+            const { ref } = doc
+            const { authIDs } = doc.data()
+            if(!authIDs.includes(uid)) {
+                await ref.update({
+                    authIDs: [...authIDs, uid]
+                })
+            }
+            
+        }
+        else {
+            const user = {
+                firstName: given_name,
+                lastName: family_name,
+                authIDs: [uid],
+                email,
+            }
+                    
+            const userRes = await fire
+                .firestore()
+                .collection('users')
+                .add(user)
+        }
+
+        console.log(result)
+        authActions.getUserDataByUID(uid)
+        authActions.stopFetching()
     },
 
-    signInWithFacebook: () => (dispatch) => {
+    signInWithFacebook: () => async (dispatch) => {
+        authActions.startFetching()
         const provider = new firebase.auth.FacebookAuthProvider()
-        firebase.auth().signInWithPopup(provider)
-            .then(result => {
-                console.log(result)
-            })
+        provider.addScope('email')
+        const result = await firebase.auth().signInWithPopup(provider)
+        
+        const {
+            uid,
+        } = result.user
+        const {
+            email,
+            family_name,
+            given_name,
+        } = result.additionalUserInfo.profile
+
+        const usersRef = await fire
+            .firestore()
+            .collection('users')
+            .where('email', '==', email)
+
+        const usersRes = await usersRef.get()
+        const userExists = !usersRes.empty
+
+        if(userExists) {
+            const doc = usersRes.docs[0]
+            const { ref } = doc
+            const { authIDs } = doc.data()
+            if(!authIDs.includes(uid)) {
+                await ref.update({
+                    authIDs: [...authIDs, uid]
+                })
+            }
+            
+        }
+        else {
+            const user = {
+                firstName: given_name,
+                lastName: family_name,
+                authIDs: [uid],
+                email,
+            }
+                    
+            const userRes = await fire
+                .firestore()
+                .collection('users')
+                .add(user)
+        }
+
+        console.log(result)
+        authActions.getUserDataByUID(uid)
+        authActions.stopFetching()
     },
 
     fetchAsync: (id) => async (dispatch) => {

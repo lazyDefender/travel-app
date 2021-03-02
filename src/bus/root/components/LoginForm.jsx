@@ -53,7 +53,7 @@ const SignUpForm = () => {
               history.replace('/profile')
             }
             else {
-              history.back()
+              history.goBack()
             }
             
         }}
@@ -127,7 +127,7 @@ const SignUpForm = () => {
     <GoHomeBar/>
     {formJSX}
   </>
-  const content = auth.data ? <Redirect to={redirectTo}/> : page 
+  const content = auth.data && !auth.error ? <Redirect to={redirectTo}/> : page 
   return <>
     {content}
   </>

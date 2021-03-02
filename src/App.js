@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Container, CssBaseline, ThemeProvider } from '@material-ui/core'
 import { BrowserRouter as Router } from 'react-router-dom'
 import firebase from 'firebase'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import './App.css'
 
 import theme from './theme'
@@ -14,7 +14,9 @@ import useAuth from './global/hooks/useAuth'
 
 const App = () => {
   const dispatch = useDispatch()
+  const { createdWithEmailAndPassword } = useSelector(state => state.auth)
   const { data, isFetching } = useAuth()
+  const [isStart, setIsStart] = useState(true)
   useEffect(() => {
     console.log('app use effect')
 
@@ -25,7 +27,10 @@ const App = () => {
     firebase.auth().onAuthStateChanged(function(user) {
       if (user) {
         console.log('user: ', user)
-        dispatch(authActions.getUserDataByUID(user.uid))
+        if(createdWithEmailAndPassword || isStart) {
+          dispatch(authActions.getUserDataByUID(user.uid))
+          setIsStart(false)
+        } 
       }
       else {
         console.log('not authorized')

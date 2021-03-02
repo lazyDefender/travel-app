@@ -4,6 +4,7 @@ const initialState = {
     data: null,
     isFetching: true,
     error: null,
+    createdWithEmailAndPassword: null,
 };
 
 export const authReducer = (state = initialState, {type, payload}) => {
