@@ -45,7 +45,7 @@ const SignUpForm = () => {
         initialValues={initialValues}
         validationSchema={validationSchema}
         onSubmit={(values, { setSubmitting }) => {
-            store.dispatch(authActions.createUser(values))
+            store.dispatch(authActions.createUserWithEmailAndPassword(values))
           
             if(['/login', '/signup'].includes(firstLoadedPage)) {
               history.replace('/')
@@ -54,7 +54,7 @@ const SignUpForm = () => {
               history.replace('/profile')
             }
             else {
-              history.back()
+              history.goBack()
             }
         }}
     >

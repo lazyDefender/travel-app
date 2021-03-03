@@ -62,9 +62,13 @@ export const authActions = Object.freeze({
         const newUser = {
             firstName,
             lastName,
+            email,
             authIDs: [uid],
         }
-        await this.saveUser(newUser)
+        const userRes = await fire
+                .firestore()
+                .collection('users')
+                .add(newUser)
         dispatch(authActions.fill(newUser))
         dispatch(authActions.stopFetching())
         dispatch(authActions.setCreatedWithEmailAndPassword(false))
@@ -81,7 +85,7 @@ export const authActions = Object.freeze({
             .signInWithEmailAndPassword(email, password)
 
         const { uid } = authRes.user
-        const userData = await this.getUserDataByUID(uid)
+        const userData = await authActions.getUserDataByUID(uid)
 
         dispatch(authActions.fill(userData))
         dispatch(authActions.stopFetching())
@@ -161,13 +165,17 @@ export const authActions = Object.freeze({
 
         if(userExists) {
             const doc = usersRes.docs[0]
-            const { ref } = doc
+            const { ref, id } = doc
             const { authIDs } = doc.data()
             if(!authIDs.includes(uid)) {
                 await ref.update({
                     authIDs: [...authIDs, uid]
                 })
             }
+            authActions.fill({
+                id,
+                ...doc.data(),
+            })
             
         }
         else {
@@ -182,10 +190,10 @@ export const authActions = Object.freeze({
                 .firestore()
                 .collection('users')
                 .add(user)
+            
+            authActions.getUserDataByUID(uid)
         }
-
-        console.log(result)
-        authActions.getUserDataByUID(uid)
+        
         authActions.stopFetching()
     },
 
@@ -212,19 +220,23 @@ export const authActions = Object.freeze({
         const usersRes = await usersRef.get()
         const userExists = !usersRes.empty
 
+        let user = {}
+        let id = null
+
         if(userExists) {
             const doc = usersRes.docs[0]
             const { ref } = doc
-            const { authIDs } = doc.data()
-            if(!authIDs.includes(uid)) {
+            id = doc.id
+            const user = doc.data()
+            if(!user.authIDs.includes(uid)) {
                 await ref.update({
-                    authIDs: [...authIDs, uid]
+                    authIDs: [...user.authIDs, uid]
                 })
             }
             
         }
         else {
-            const user = {
+            user = {
                 firstName: given_name,
                 lastName: family_name,
                 authIDs: [uid],
@@ -235,10 +247,14 @@ export const authActions = Object.freeze({
                 .firestore()
                 .collection('users')
                 .add(user)
+            
         }
 
         console.log(result)
-        authActions.getUserDataByUID(uid)
+        authActions.fill({
+            id,
+            ...user,
+        })
         authActions.stopFetching()
     },
 
