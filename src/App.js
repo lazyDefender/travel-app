@@ -24,11 +24,11 @@ const App = () => {
     dispatch(defaultActions.setFirstLoadedPage(pathname))
 
     firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL)
-    firebase.auth().onAuthStateChanged(function(user) {
+    firebase.auth().onAuthStateChanged(async (user) => {
       if (user) {
         console.log('user: ', user)
         if(createdWithEmailAndPassword || isStart) {
-          dispatch(authActions.getUserDataByUID(user.uid))
+          await dispatch(authActions.getUserDataByUID(user.uid))
           setIsStart(false)
         } 
       }

@@ -86,7 +86,18 @@ export const authActions = Object.freeze({
             .signInWithEmailAndPassword(email, password)
 
             const { uid } = authRes.user
-            const userData = await authActions.getUserDataByUID(uid)
+            const userRes = await fire
+                .firestore()
+                .collection('users')
+                .where('authIDs', 'array-contains', uid)
+                .get()
+            
+            const userDoc = userRes.docs[0]
+            const { id } = userDoc
+            const userData = {
+                id,
+                ...userDoc.data(),
+            }
 
             dispatch(authActions.fill(userData))
         }

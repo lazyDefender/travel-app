@@ -82,7 +82,7 @@ const SignUpForm = () => {
                 disabled={false}
                 />
             </Box>
-            {auth.error}
+            {auth.error === 'auth/wrong-password' ? 'Неправильний пароль' : ''}
             <Box margin={1}>
                 <Button
                 variant="contained"
