@@ -69,6 +69,9 @@ export const authActions = Object.freeze({
                 .firestore()
                 .collection('users')
                 .add(newUser)
+
+        const { currentUser } = fire.auth()
+        currentUser.sendEmailVerification()
         dispatch(authActions.fill(newUser))
         dispatch(authActions.stopFetching())
         dispatch(authActions.setCreatedWithEmailAndPassword(false))
