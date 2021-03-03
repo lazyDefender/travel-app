@@ -39,15 +39,15 @@ const SignUpForm = () => {
   const history = useHistory()
   const [open, setOpen] = React.useState(true)
   const auth = useAuth()
-  const { error } = useSelector(state => state.auth)
   const firstLoadedPage = useFirstLoadedPage()
   const formJSX = <div>
     <Typography>Вхід</Typography>
     <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}
-        onSubmit={(values, { setSubmitting }) => {
-            store.dispatch(authActions.signIn(values))
+        onSubmit={async (values, { setSubmitting }) => {
+            await store.dispatch(authActions.signIn(values))
+            const { error } = store.getState().auth
             if(!error) {
               if(['/login', '/signup'].includes(firstLoadedPage)) {
                 history.replace('/')
@@ -82,6 +82,7 @@ const SignUpForm = () => {
                 disabled={false}
                 />
             </Box>
+            {auth.error}
             <Box margin={1}>
                 <Button
                 variant="contained"
