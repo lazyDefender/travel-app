@@ -15,6 +15,7 @@ import {
 import MomentUtils from '@date-io/moment'
 import { MuiPickersUtilsProvider } from '@material-ui/pickers'
 import Box from '@material-ui/core/Box'
+import { useSelector } from 'react-redux'
 
 import { store } from '../../../init/store'
 import { authActions } from '../../../redux/auth/actions'
@@ -38,6 +39,7 @@ const SignUpForm = () => {
   const history = useHistory()
   const [open, setOpen] = React.useState(true)
   const auth = useAuth()
+  const { error } = useSelector(state => state.auth)
   const firstLoadedPage = useFirstLoadedPage()
   const formJSX = <div>
     <Typography>Вхід</Typography>
@@ -46,14 +48,16 @@ const SignUpForm = () => {
         validationSchema={validationSchema}
         onSubmit={(values, { setSubmitting }) => {
             store.dispatch(authActions.signIn(values))
-            if(['/login', '/signup'].includes(firstLoadedPage)) {
-              history.replace('/')
-            }
-            else if(firstLoadedPage === '/profile') {
-              history.replace('/profile')
-            }
-            else {
-              history.goBack()
+            if(!error) {
+              if(['/login', '/signup'].includes(firstLoadedPage)) {
+                history.replace('/')
+              }
+              else if(firstLoadedPage === '/profile') {
+                history.replace('/profile')
+              }
+              else {
+                history.goBack()
+              }
             }
             
         }}

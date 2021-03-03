@@ -80,14 +80,20 @@ export const authActions = Object.freeze({
             email, 
             password,
         } = user
-        const authRes = await fire
+        try {
+            const authRes = await fire
             .auth()
             .signInWithEmailAndPassword(email, password)
 
-        const { uid } = authRes.user
-        const userData = await authActions.getUserDataByUID(uid)
+            const { uid } = authRes.user
+            const userData = await authActions.getUserDataByUID(uid)
 
-        dispatch(authActions.fill(userData))
+            dispatch(authActions.fill(userData))
+        }
+        catch(e) {
+            dispatch(authActions.setFetchingError(e.code))
+        }
+
         dispatch(authActions.stopFetching())
     },
 

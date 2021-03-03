@@ -46,7 +46,7 @@ const SignUpForm = () => {
         validationSchema={validationSchema}
         onSubmit={(values, { setSubmitting }) => {
             store.dispatch(authActions.createUserWithEmailAndPassword(values))
-          
+            
             if(['/login', '/signup'].includes(firstLoadedPage)) {
               history.replace('/')
             }
