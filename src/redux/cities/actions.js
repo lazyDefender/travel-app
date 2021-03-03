@@ -49,7 +49,8 @@ export const citiesActions = Object.freeze({
                 ...doc.data(),
             }
         })
-        dispatch(citiesActions.fill(cities))
+        const citiesSorted = cities.sort((cityA, cityB) => cityA.name > cityB.name ? 1 : -1)
+        dispatch(citiesActions.fill(citiesSorted))
         dispatch(citiesActions.stopFetching())
     }
 })
