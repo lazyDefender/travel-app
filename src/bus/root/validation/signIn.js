@@ -2,9 +2,9 @@ import * as Yup from 'yup'
 
 export const validationSchema = Yup.object().shape({
   email: Yup.string()
-    .email('Should be valid email')
-    .required('Should not be empty'),
+    .email('Введіть валідний email')
+    .required('Введіть email'),
   password: Yup.string()
-    .min(6, 'Password should be at least 6 characters')
-    .required('Should not be empty'),
+    .min(6, 'Пароль має містити щонайменше 6 символів')
+    .required('Введіть пароль'),
 })
