@@ -112,7 +112,7 @@ export const reservationActions = Object.freeze({
         const fullOrder = {
             adultsCount,
             kidsCount,
-            datetime,
+            datetime: datetime.toDate(),
             tour: tourRef,
             user: userRef,
         }
@@ -121,7 +121,7 @@ export const reservationActions = Object.freeze({
             .firestore()
             .collection('orders')
             .add(fullOrder)
-        dispatch(reservationActions.startFetching())
+        dispatch(reservationActions.stopFetching())
     }
 
 })
