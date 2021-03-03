@@ -112,7 +112,7 @@ export const reservationActions = Object.freeze({
         const fullOrder = {
             adultsCount,
             kidsCount,
-            datetime: datetime.toDate(),
+            datetime: typeof datetime.toDate === 'function' ? datetime.toDate() : datetime,
             tour: tourRef,
             user: userRef,
         }
