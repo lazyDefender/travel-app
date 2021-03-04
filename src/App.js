@@ -11,6 +11,7 @@ import { history } from './navigation/history'
 import { authActions } from './redux/auth/actions'
 import { defaultActions } from './redux/default/actions'
 import useAuth from './global/hooks/useAuth'
+import Progress from './global/components/Progress'
 
 const App = () => {
   const dispatch = useDispatch()
@@ -40,7 +41,7 @@ const App = () => {
     });
   }, [dispatch])
 
-  const appJSX = isFetching ?  'loading auth...' : <Routes />
+  const appJSX = isFetching ?  <Progress/> : <Routes />
   
   return (
     <ThemeProvider theme={theme}>

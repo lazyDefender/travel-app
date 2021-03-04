@@ -1,9 +1,5 @@
 import React from 'react'
 import { useParams } from 'react-router-dom'
-import {
-    Backdrop,
-    CircularProgress,
-} from '@material-ui/core'
 
 import HotelsToursList from './components/HotelToursList'
 import HotelMain from './components/HotelMain'
@@ -11,15 +7,13 @@ import useHotel from './hooks/useHotel'
 import useToursByHotel from './hooks/useToursByHotel'
 import GoogleMap from './components/GoogleMap'
 import AuthBar from '../../global/components/AuthBar'
+import Progress from '../../global/components/Progress'
 
 
 const Hotel = () => {
     let { id } = useParams();
     const {data, isFetching} = useHotel(id)
     const tours = useToursByHotel(id)
-    const progressJSX = <Backdrop  open={true} >
-        <CircularProgress color="inherit" />
-    </Backdrop>
     const hotelJSX = <>
         <HotelMain hotel={data}/>
         <HotelsToursList tours={tours}/>
@@ -28,7 +22,7 @@ const Hotel = () => {
     return (
         <>
             <AuthBar/>
-            {isFetching ? progressJSX : hotelJSX}
+            {isFetching ? <Progress/> : hotelJSX}
         </>
     )
 }
