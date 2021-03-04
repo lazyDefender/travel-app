@@ -13,6 +13,7 @@ import {MuiPickersUtilsProvider} from '@material-ui/pickers'
 import { store } from '../../../init/store'
 import useAuth from '../../../global/hooks/useAuth'
 import { authActions } from '../../../redux/auth/actions'
+import { ordersActions } from '../../../redux/orders/actions'
 
 
 const UserForm = ({ 
@@ -35,6 +36,7 @@ const UserForm = ({
                     ...values,
                     id,
                 }))
+                store.dispatch(ordersActions.fetchByUser(id))
             }}
         >
         {({submitForm, isSubmitting, touched, errors}) => (
