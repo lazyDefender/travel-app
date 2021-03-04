@@ -83,6 +83,7 @@ const SignUpForm = () => {
                 />
             </Box>
             {auth.error === 'auth/wrong-password' ? 'Неправильний пароль' : ''}
+            {auth.error === 'auth/user-not-found' ? 'Користувача із введеним email не знайдено' : ''}
             <Box margin={1}>
                 <Button
                 variant="contained"
