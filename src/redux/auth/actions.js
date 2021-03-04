@@ -28,6 +28,12 @@ export const authActions = Object.freeze({
         }
     },
 
+    clear: () => {
+        return {
+            type: types.AUTH_CLEAR,
+        }
+    },
+
     setFetchingError: (error) => {
         return {
             type: types.AUTH_SET_FETCHING_ERROR,
@@ -161,7 +167,7 @@ export const authActions = Object.freeze({
     },
 
     signInWithGoogle: () => async (dispatch) => {
-        authActions.startFetching()
+        dispatch(authActions.startFetching())
         const provider = new firebase.auth.GoogleAuthProvider()
         provider.addScope('email')
         const result = await firebase.auth().signInWithPopup(provider)
@@ -192,10 +198,10 @@ export const authActions = Object.freeze({
                     authIDs: [...authIDs, uid]
                 })
             }
-            authActions.fill({
+            dispatch(authActions.fill({
                 id,
                 ...doc.data(),
-            })
+            }))
             
         }
         else {
@@ -211,14 +217,14 @@ export const authActions = Object.freeze({
                 .collection('users')
                 .add(user)
             
-            authActions.getUserDataByUID(uid)
+            dispatch(authActions.getUserDataByUID(uid))
         }
         
-        authActions.stopFetching()
+        dispatch(authActions.stopFetching())
     },
 
     signInWithFacebook: () => async (dispatch) => {
-        authActions.startFetching()
+        dispatch(authActions.startFetching())
         const provider = new firebase.auth.FacebookAuthProvider()
         provider.addScope('email')
         const result = await firebase.auth().signInWithPopup(provider)
@@ -271,11 +277,20 @@ export const authActions = Object.freeze({
         }
 
         console.log(result)
-        authActions.fill({
+        dispatch(authActions.fill({
             id,
             ...user,
-        })
-        authActions.stopFetching()
+        }))
+        dispatch(authActions.stopFetching())
+    },
+
+    deleteUser: () => async (dispatch) => {
+        dispatch(authActions.startFetching())
+
+        await fire.auth().currentUser.delete()
+        dispatch(authActions.clear())
+
+        dispatch(authActions.stopFetching())
     },
 
     fetchAsync: (id) => async (dispatch) => {

@@ -67,6 +67,17 @@ const UserForm = ({
                     Готово
                     </Button>
                 </Box>
+                <Box margin={1}>
+                    <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={() => {
+                        store.dispatch(authActions.deleteUser())
+                    }}
+                    >
+                    Видалити акаунт
+                    </Button>
+                </Box>
             </Form>
         </MuiPickersUtilsProvider>
         )}

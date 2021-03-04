@@ -35,6 +35,14 @@ export const authReducer = (state = initialState, {type, payload}) => {
             error: null,
         }
 
+        case types.AUTH_CLEAR: 
+        return {
+            data: null,
+            isFetching: true,
+            error: null,
+            createdWithEmailAndPassword: null,
+        }
+
         default: 
             return state
     }
