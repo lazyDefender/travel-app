@@ -53,10 +53,10 @@ export const hotelActions = Object.freeze({
             ...hotelDoc.data(),
         }
 
-        const place = await getPlace(hotel.name)
+        // const place = await getPlace(hotel.name)
         const result = {
             ...hotel,
-            ...place.candidates[0],
+            // ...place.candidates[0],
         }
         dispatch(hotelActions.fill(result))
         dispatch(hotelActions.stopFetching())

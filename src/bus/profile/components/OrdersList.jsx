@@ -16,9 +16,7 @@ const OrdersList = ({orders}) => {
     const emptyJSX = <div>
         <Grid 
             container
-            direction="column"
-            alignItems="center"
-            justify="center"
+            spacing={4}
         >
             <Grid item>
                 <Cancel/>

@@ -18,32 +18,15 @@ const HotelMain = ({hotel}) => {
         maxAdultsCount,
         rating,
         photos,
+        image,
     } = hotel || {}
-    
-    const [image, setImage] = useState(null)
-    
-    const {photo_reference} = photos ? photos[0] : {}
-
-    useEffect(() => {
-        const photoUri = getPhotoUri({
-            photoRef: photo_reference,
-            maxwidth: 1000,
-        })
-        setImage(photoUri)
-    }, [photo_reference])
-
-    const onImageError = (e) => {
-        setImage(`${process.env.PUBLIC_URL}/image-not-found.svg`)
-        console.log('on image error')
-    }
 
     return (
         <Card>
             <ImageWithFallback
-              image={image}
+              image={image?.source}
               alt={name}
               title={name}
-              onError={onImageError}
               height="300"
             />
             <CardContent>

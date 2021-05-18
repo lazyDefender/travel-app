@@ -17,7 +17,7 @@ const Hotel = () => {
     const hotelJSX = <>
         <HotelMain hotel={data}/>
         <HotelsToursList tours={tours}/>
-        <GoogleMap location={data?.geometry.location}/>
+        {/* <GoogleMap location={data?.geometry.location}/> */}
     </>
     return (
         <>

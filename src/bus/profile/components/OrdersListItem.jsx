@@ -8,7 +8,7 @@ import Order from './Order'
 const OrdersListItem = (props) => {
     const { order } = props
     return <Grid item 
-    // xs={12}
+        xs={12} sm={6} md={4}
     >
         <Order {...order}/>
     </Grid>

@@ -8,9 +8,8 @@ import ToursListItem from './ToursListItem'
 const ToursList = ({tours}) => {
     return (
         <Grid 
-            container 
-            direction="row"
-            justify="space-between"
+            container
+            spacing={4}
         >
         {tours?.map((tour) => {
             return (

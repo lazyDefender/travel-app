@@ -27,20 +27,11 @@ const useStyles = makeStyles({
 })
 
 const ToursListItem = ({hotel, adultPrice, kidPrice}) => {
-    
+
   const classes = useStyles()
   const [image, setImage] = useState(null)
 
   const { photos, rating, id } = hotel
-  const photoRef = photos ? photos[0].photo_reference : ''
-
-  useEffect(() => {
-    const finalPhotoSrc = getPhotoUri({
-      maxwidth: 450,
-      photoRef,
-    })
-    setImage(finalPhotoSrc)
-  }, [photoRef])
   
   const onImageError = (e) => {
     setImage(`${process.env.PUBLIC_URL}/image-not-found.svg`)
@@ -48,12 +39,12 @@ const ToursListItem = ({hotel, adultPrice, kidPrice}) => {
 
   return (
     <Tooltip title={hotel.name} interactive arrow>
-      <Grid item>
+      <Grid item xs={12} sm={6} md={4}>
       <Link to={`${book.hotels}/${id}`}>
         <Card className={classes.root}>
           <CardActionArea>
             <ImageWithFallback
-              image={image}
+              image={hotel?.image.source}
               alt={hotel.name}
               title={hotel.name}
               onError={onImageError}

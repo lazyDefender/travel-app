@@ -14,12 +14,16 @@ import {
   DatePicker,
 } from 'formik-material-ui-pickers'
 import MomentUtils from '@date-io/moment'
+import moment from 'moment';
 import { MuiPickersUtilsProvider } from '@material-ui/pickers'
 
 import useCities from '../hooks/useCities' 
 import { store } from '../../../init/store'
 import { toursFilterActions } from '../../../redux/toursFilter/actions'
 import useToursFilterFormState from '../hooks/useToursFilterFormState'
+import '../../../moment-locales/uk';
+
+moment.locale('uk');
 
 const ToursFilterForm = () => {
 
@@ -52,7 +56,7 @@ const ToursFilterForm = () => {
     }}
   >
     {({submitForm, isSubmitting, touched, errors}) => (
-      <MuiPickersUtilsProvider utils={MomentUtils}>
+      <MuiPickersUtilsProvider locale="uk" utils={MomentUtils}>
         <Form>
           <Grid 
             container 
@@ -89,7 +93,8 @@ const ToursFilterForm = () => {
                   inputVariant="outlined"
                   disablePast={true} 
                   name="datetime" 
-                  label="Початок туру" 
+                  label="Початок туру"
+                  cancelLabel="Скасувати" 
                 />
               </Box>
             </Grid>

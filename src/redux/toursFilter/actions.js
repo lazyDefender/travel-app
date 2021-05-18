@@ -203,13 +203,13 @@ export const toursFilterActions = Object.freeze({
                 }
             } 
 
-            const p = await getPlace(h.hotel.name)
-            console.log(p)
+            // const p = await getPlace(h.hotel.name)
+            // console.log(p)
             finalToursWithHotels.push({
                 ...h,
                 hotel: {
                     ...h.hotel,
-                    ...p.candidates[0],
+                    // ...p.candidates[0],
                 }
             })
         }

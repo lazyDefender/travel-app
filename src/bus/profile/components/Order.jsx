@@ -16,7 +16,6 @@ import { getPhotoUri } from '../../../global/getPhotoUri'
 
 const Order = (props) => {
     const { 
-      photos,
       hotel,
       adultsCount,
       kidsCount,
@@ -32,11 +31,6 @@ const Order = (props) => {
       kidPrice,
       adultPrice,
     } = tour
-    const photoRef = photos ? photos[0].photo_reference : ''
-    const finalPhotoSrc = getPhotoUri({
-      maxwidth: 450,
-      photoRef,
-    })
     const total = kidPrice * kidsCount + adultPrice * adultsCount 
     
     return <>
@@ -47,7 +41,7 @@ const Order = (props) => {
                 component="img"
                 alt={name}
                 height="140"
-                image={finalPhotoSrc}
+                image={hotel.image.source}
                 title={name}
               />
               <CardContent>

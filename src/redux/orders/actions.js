@@ -79,12 +79,12 @@ export const ordersActions = Object.freeze({
                 ...hotelRes.data(),
             }
 
-            const place = await getPlace(hotel.name)
+            // const place = await getPlace(hotel.name)
             const result = {
                 ...order,
                 tour,
                 hotel,
-                ...place.candidates[0],
+                // ...place.candidates[0],
             }
 
             orders.push(result)
