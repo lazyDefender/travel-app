@@ -3,6 +3,7 @@ import {
     deepOrange,
     cyan,
 } from '@material-ui/core/colors'
+import { ukUA } from '@material-ui/core/locale'
 
 const theme = createMuiTheme({
     palette: {
@@ -13,6 +14,6 @@ const theme = createMuiTheme({
         //     main: cyan[500],
         // },
     }
-})
+}, ukUA)
 
 export default theme
