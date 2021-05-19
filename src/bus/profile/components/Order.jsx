@@ -65,11 +65,6 @@ const Order = (props) => {
                 </Typography>
               </CardContent>
             </CardActionArea>
-            <CardActions>
-              <Button size="small" color="primary">
-                Про готель
-              </Button>
-            </CardActions>
           </Card>
         </Link>
     </>

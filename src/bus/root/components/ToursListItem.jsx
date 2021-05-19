@@ -38,40 +38,44 @@ const ToursListItem = ({hotel, adultPrice, kidPrice}) => {
   }
 
   return (
-    <Tooltip title={hotel.name} interactive arrow>
+    
       <Grid item xs={12} sm={6} md={4}>
-      <Link to={`${book.hotels}/${id}`}>
-        <Card className={classes.root}>
-          <CardActionArea>
-            <ImageWithFallback
-              image={hotel?.image.source}
-              alt={hotel.name}
-              title={hotel.name}
-              onError={onImageError}
-              height="140"
-            />
-            <CardContent>
-              <Typography noWrap gutterBottom variant="h5" component="h2">
-                {hotel.name}
-              </Typography>
-              <Typography variant="body2" color="textSecondary" component="p">
-                1 дор - {adultPrice}$
-              </Typography>
-              <Typography variant="body2" color="textSecondary" component="p">
-                1 дит - {kidPrice}$
-              </Typography>
-              <Rating
-                name="simple-controlled"
-                value={rating}
-                disabled
+      
+        <Tooltip title={hotel.name} interactive arrow>
+        
+          <Card className={classes.root}>
+          <Link to={`${book.hotels}/${id}`}>
+            <CardActionArea>
+              <ImageWithFallback
+                image={hotel?.image.source}
+                alt={hotel.name}
+                title={hotel.name}
+                onError={onImageError}
+                height="140"
               />
-            </CardContent>
-          </CardActionArea>
-          
-        </Card>
-      </Link>
+              <CardContent>
+                <Typography noWrap gutterBottom variant="h5" component="h2">
+                  {hotel.name}
+                </Typography>
+                <Typography variant="body2" color="textSecondary" component="p">
+                  1 дор - {adultPrice}$
+                </Typography>
+                <Typography variant="body2" color="textSecondary" component="p">
+                  1 дит - {kidPrice}$
+                </Typography>
+                <Rating
+                  name="simple-controlled"
+                  value={rating}
+                  disabled
+                />
+              </CardContent>
+            </CardActionArea>
+            </Link>
+          </Card>
+        </Tooltip>
+      
     </Grid>
-    </Tooltip>
+   
   )
 }
 
