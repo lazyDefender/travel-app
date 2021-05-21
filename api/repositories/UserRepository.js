@@ -33,6 +33,25 @@ class UserRepository {
 
         return users;
     }
+
+    static async getById(id) {
+        const userDoc = await firebase
+            .firestore()
+            .collection(collections.USERS)
+            .doc(id)
+            .get();
+
+        if(userDoc.exists) {
+            const user = {
+                id: userDoc.id,
+                ...userDoc.data(),
+            };
+    
+            return user;
+        }
+
+        return null;
+    }
 }
 
 module.exports = UserRepository;

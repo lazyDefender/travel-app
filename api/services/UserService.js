@@ -16,8 +16,8 @@ class UserService {
         return users;
     }
 
-    getOne(search) {
-        const item = UserRepository.getOne(search);
+    static async getById(id) {
+        const item = await UserRepository.getById(id);
         if(!item) {
             return null;
         }

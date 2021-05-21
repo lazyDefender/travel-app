@@ -44,9 +44,9 @@ router.get('/', async (req, res, next) => {
     next();
 }, responseMiddleware);
 
-router.get('/:id', (req, res, next) => {
+router.get('/:id', async (req, res, next) => {
     const { id } = req.params;  
-    const user = UserService.getOne(id);
+    const user = await UserService.getById(id);
     req.result = user ? {
         status: 200,
         body: user,
