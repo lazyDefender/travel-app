@@ -7,7 +7,10 @@ class UserService {
     static async create(user) {
         const createdUser = await UserRepository.create(user);
 
-        return createdUser;
+        return {
+            data: createdUser,
+            error: null,
+        };
     }
 
     static async getAll() {
@@ -15,15 +18,25 @@ class UserService {
         if(!users) {
             return [];
         }
-        return users;
+        return {
+            data: users,
+            error: null,
+        };
     }
 
     static async getById(id) {
-        const item = await UserRepository.getById(id);
-        if(!item) {
-            return null;
+        const user = await UserRepository.getById(id);
+        if(!user) {
+            return {
+                data: null,
+                error: errors.USERS.notFoundById(id),
+            };
         }
-        return item;
+        
+        return {
+            data: user,
+            error: null,
+        };
     }
 
     static async update(id, dataToUpdate) {
@@ -34,16 +47,22 @@ class UserService {
                 return null;
             }
 
-            return updatedUser;
+            return {
+                data: updatedUser,
+                error: null,
+            };
         }
         else {
-            return errors.USERS.notFoundById(id);
+            return {
+                data: null,
+                error: errors.USERS.notFoundById(id),
+            }    
         }
         
     }
 
-    delete(id) {
-        UserRepository.delete(id);
+    static async delete(id) {
+        await UserRepository.delete(id);
     }
 }
 

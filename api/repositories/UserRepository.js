@@ -69,6 +69,15 @@ class UserRepository {
 
         return user;
     }
+
+    static async delete(id) {
+        const userRef = firebase
+            .firestore()
+            .collection(collections.USERS)
+            .doc(id);
+
+        await userRef.delete();
+    }
 }
 
 module.exports = UserRepository;

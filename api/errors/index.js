@@ -1,4 +1,4 @@
-const userErrors = require('./userErrors');
+const userErrors = require('./users/userErrors');
 
 const errors = {
     USERS: userErrors,

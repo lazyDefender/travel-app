@@ -4,6 +4,8 @@ const UserService = require('../services/UserService');
 const { responseMiddleware } = require('../middlewares/response.middleware');
 const generateError = require('../utils/generateError');
 const errors = require('../errors');
+const UserRepository = require('../repositories/UserRepository');
+const errorCodes = require('../errors/users/errorCodes');
 
 const router = Router();
 
@@ -48,15 +50,20 @@ router.get('/', async (req, res, next) => {
 
 router.get('/:id', async (req, res, next) => {
     const { id } = req.params;  
-    const user = await UserService.getById(id);
-    req.result = user ? {
-        status: 200,
-        body: user,
-    } :
-    {
-        status: 404,
-        body: errors.USERS.notFoundById(id),
-    };
+    const { data: user, error } = await UserService.getById(id);
+    if(error && error.code === errorCodes.USER_NOT_FOUND_BY_ID) {
+        req.result = {
+            status: 404,
+            body: error,
+        }
+    }
+    else {
+        req.result = {
+            status: 200,
+            body: user,
+        }
+    }
+     
     next();
 }, responseMiddleware);
 
@@ -70,12 +77,16 @@ router.put('/:id', async (req, res, next) => {
     next();
 }, responseMiddleware);
 
-router.delete('/:id', (req, res, next) => {
+router.delete('/:id', async (req, res, next) => {
     const { id } = req.params;
-    UserService.delete(id);
-    req.result = {
-        status: 200,
+    const user = await UserRepository.getById(id);
+    if(user) {
+        await UserService.delete(id);
+        req.result = {
+            status: 200,
+        }
     }
+    
     next();
 }, responseMiddleware);
 
