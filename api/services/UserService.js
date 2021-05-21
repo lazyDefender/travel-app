@@ -1,4 +1,6 @@
+const errors = require('../errors');
 const UserRepository = require('../repositories/UserRepository');
+const generateError = require('../utils/generateError');
 
 class UserService {
 
@@ -24,12 +26,20 @@ class UserService {
         return item;
     }
 
-    update(id, dataToUpdate) {
-        const user = UserRepository.update(id, dataToUpdate);
-        if(!user) {
-            return null;
+    static async update(id, dataToUpdate) {
+        const user = await UserRepository.getById(id);
+        if(user) {
+            const updatedUser = await UserRepository.update(id, dataToUpdate);
+            if(!updatedUser) {
+                return null;
+            }
+
+            return updatedUser;
         }
-        return user;
+        else {
+            return errors.USERS.notFoundById(id);
+        }
+        
     }
 
     delete(id) {

@@ -52,6 +52,23 @@ class UserRepository {
 
         return null;
     }
+
+    static async update(id, updatedUser) {
+        const userRef = firebase
+            .firestore()
+            .collection(collections.USERS)
+            .doc(id);
+        await userRef.update(updatedUser);
+
+        const userDoc = await userRef.get();
+
+        const user = {
+            id: userDoc.id,
+            ...userDoc.data(),
+        };
+
+        return user;
+    }
 }
 
 module.exports = UserRepository;

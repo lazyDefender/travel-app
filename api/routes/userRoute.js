@@ -2,6 +2,8 @@ const { Router } = require('express');
 const UserService = require('../services/UserService');
 // const { createUserValid, updateUserValid } = require('../middlewares/user.validation.middleware');
 const { responseMiddleware } = require('../middlewares/response.middleware');
+const generateError = require('../utils/generateError');
+const errors = require('../errors');
 
 const router = Router();
 
@@ -53,17 +55,14 @@ router.get('/:id', async (req, res, next) => {
     } :
     {
         status: 404,
-        body: {
-            error: true,
-            message: `User ${id} does not exist`,
-        }
+        body: errors.USERS.notFoundById(id),
     };
     next();
 }, responseMiddleware);
 
-router.put('/:id', (req, res, next) => {
+router.put('/:id', async (req, res, next) => {
     const { id } = req.params;
-    const updatedUser = UserService.update(id, req.body);
+    const updatedUser = await UserService.update(id, req.body);
     req.result = {
         status: 200,
         body: updatedUser,
