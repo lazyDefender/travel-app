@@ -2,7 +2,9 @@ require('dotenv').config()
 
 const express = require('express')
 const cors = require('cors');
-require('./config/db');
+const initializeFirebase = require('./firebase');
+
+initializeFirebase();
 
 const app = express()
 
@@ -14,6 +16,8 @@ const routes = require('./routes/index');
 routes(app);
 
 const port = 3050;
-app.listen(process.env.PORT || port, () => {});
+app.listen(process.env.PORT || port, () => {
+    console.log('started!')
+});
 
 exports.app = app;

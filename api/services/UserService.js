@@ -1,28 +1,15 @@
-const { UserRepository } = require('../repositories/userRepository');
+const UserRepository = require('../repositories/UserRepository');
 
 class UserService {
 
-    create(user) {
-        const {
-            email,
-            phoneNumber,
-        } = user;
+    static async create(user) {
+        const createdUser = await UserRepository.create(user);
 
-        const userWithEmail = UserRepository.getOne({ email });
-        if(userWithEmail) throw new Error('User with specified email exists');
-
-        const userWithPhoneNumber = UserRepository.getOne({ phoneNumber });
-        if(userWithPhoneNumber) throw new Error('User with specified phone number exists');
-
-        const createdUser = UserRepository.create(user);
-        if(!createdUser) {
-            return null;
-        }
         return createdUser;
     }
 
-    getAll() {
-        const users = UserRepository.getAll();
+    static async getAll() {
+        const users = await UserRepository.getAll();
         if(!users) {
             return [];
         }
@@ -50,4 +37,4 @@ class UserService {
     }
 }
 
-module.exports = new UserService();
+module.exports = UserService;

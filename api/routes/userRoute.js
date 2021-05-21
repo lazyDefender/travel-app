@@ -1,17 +1,17 @@
 const { Router } = require('express');
-const UserService = require('../services/userService');
-const { createUserValid, updateUserValid } = require('../middlewares/user.validation.middleware');
+const UserService = require('../services/UserService');
+// const { createUserValid, updateUserValid } = require('../middlewares/user.validation.middleware');
 const { responseMiddleware } = require('../middlewares/response.middleware');
 
 const router = Router();
 
-router.post('/', createUserValid, (req, res, next) => {
+router.post('/', async (req, res, next) => {
     if(req.validationError) {
         next();
     }
     else {
         try {
-            const createdUser = UserService.create(req.body);
+            const createdUser = await UserService.create(req.body);
             req.result = {
                 status: 200,
                 body: createdUser,
@@ -35,8 +35,8 @@ router.post('/', createUserValid, (req, res, next) => {
     
 }, responseMiddleware);
 
-router.get('/', (req, res, next) => {
-    const users = UserService.getAll();
+router.get('/', async (req, res, next) => {
+    const users = await UserService.getAll();
     req.result = {
         status: 200,
         body: users,
@@ -61,7 +61,7 @@ router.get('/:id', (req, res, next) => {
     next();
 }, responseMiddleware);
 
-router.put('/:id', updateUserValid, (req, res, next) => {
+router.put('/:id', (req, res, next) => {
     const { id } = req.params;
     const updatedUser = UserService.update(id, req.body);
     req.result = {
