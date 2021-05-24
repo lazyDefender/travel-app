@@ -22,9 +22,9 @@ router.post('/', validation.save, async (req, res, next) => {
     }
 
     else {
-        const {data: createdUser, error} = await UserService.create(req.body);
+        const { data: createdUser, error } = await UserService.create(req.body);
         req.result = {
-            status: 200,
+            status: 201,
             body: createdUser,
         };
         
@@ -33,7 +33,7 @@ router.post('/', validation.save, async (req, res, next) => {
 }, responseMiddleware);
 
 router.get('/', async (req, res, next) => {
-    const users = await UserService.getAll();
+    const { data: users } = await UserService.getAll();
     req.result = {
         status: 200,
         body: users,
@@ -81,7 +81,7 @@ router.patch('/:id', validation.update, async (req, res, next) => {
     }
     
     const { id } = req.params;
-    const {data: updatedUser, error} = await UserService.update(id, req.body);
+    const { data: updatedUser, error } = await UserService.update(id, req.body);
 
     if(error && error.code === errorCodes.USERS.USER_NOT_FOUND_BY_ID) {
         const body = {
