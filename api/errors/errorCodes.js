@@ -1,7 +1,7 @@
 const userErrorCodes = require('./users/userErrorCodes');
 
-const errors = {
+const errorCodes = {
     USERS: userErrorCodes,
 };
 
-module.exports = errors;
+module.exports = errorCodes;
