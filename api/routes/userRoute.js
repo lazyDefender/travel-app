@@ -1,9 +1,10 @@
 const { Router } = require('express');
 const UserService = require('../services/UserService');
-const { validation } = require('../middlewares/user.validation.middleware');
+const validation = require('../middlewares/validation/user.validation.middleware');
 const { responseMiddleware } = require('../middlewares/response.middleware');
 const UserRepository = require('../repositories/UserRepository');
-const errorCodes = require('../errors/users/userErrorCodes');
+const errors = require('../errors');
+const errorCodes = require('../errors/errorCodes');
 
 const router = Router();
 
@@ -49,10 +50,14 @@ router.get('/', async (req, res, next) => {
 router.get('/:id', async (req, res, next) => {
     const { id } = req.params;  
     const { data: user, error } = await UserService.getById(id);
-    if(error && error.code === errorCodes.USER_NOT_FOUND_BY_ID) {
+    if(error && error.code === errorCodes.USERS.USER_NOT_FOUND_BY_ID) {
+        const body = {
+            errors: [error],
+        }
+        
         req.result = {
+            body,
             status: 404,
-            body: error,
         }
     }
     else {
