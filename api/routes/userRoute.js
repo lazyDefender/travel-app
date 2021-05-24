@@ -1,7 +1,6 @@
 const { Router } = require('express');
 const UserService = require('../services/UserService');
 const validation = require('../middlewares/validation/user.validation.middleware');
-const { responseMiddleware } = require('../middlewares/response.middleware');
 const errorCodes = require('../errors/errorCodes');
 const { validationResult } = require('express-validator');
 const validationError = require('../utils/validationError');

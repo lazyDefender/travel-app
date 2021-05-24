@@ -2,7 +2,6 @@ const errors = require('../errors');
 const UserRepository = require('../repositories/UserRepository');
 
 class UserService {
-
     static async create(user) {
         const createdUser = await UserRepository.create(user);
 
@@ -61,8 +60,6 @@ class UserService {
     }
 
     static async delete(id) {
-        
-
         const user = await UserRepository.getById(id);
 
         if(user) {
