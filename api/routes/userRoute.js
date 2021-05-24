@@ -30,7 +30,7 @@ router.post('/', validation.save, async (req, res, next) => {
         
         next(); 
     }
-}, responseMiddleware);
+});
 
 router.get('/', async (req, res, next) => {
     const { data: users } = await UserService.getAll();
@@ -39,7 +39,7 @@ router.get('/', async (req, res, next) => {
         body: users,
     }
     next();
-}, responseMiddleware);
+});
 
 router.get('/:id', async (req, res, next) => {
     const { id } = req.params;  
@@ -64,13 +64,12 @@ router.get('/:id', async (req, res, next) => {
     }
      
     next();
-}, responseMiddleware);
+});
 
 router.patch('/:id', validation.update, async (req, res, next) => {
     const errors = validationResult(req)
         .errors
         .map(error => validationError(error));
-
 
     if(errors.length > 0) {
         req.validationErrors = errors;
@@ -102,11 +101,10 @@ router.patch('/:id', validation.update, async (req, res, next) => {
     }
 
     next();
-}, responseMiddleware);
+});
 
 router.delete('/:id', async (req, res, next) => {
     const { id } = req.params;
-
     const { error } = await UserService.delete(id);
 
     if(error && error.code === errorCodes.USERS.USER_NOT_FOUND_BY_ID) {
@@ -127,6 +125,6 @@ router.delete('/:id', async (req, res, next) => {
     }
     
     next();
-}, responseMiddleware);
+});
 
 module.exports = router;
