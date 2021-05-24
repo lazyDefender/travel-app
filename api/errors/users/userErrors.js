@@ -1,5 +1,5 @@
 const generateError = require("../../utils/generateError");
-const errorCodes = require("./errorCodes");
+const errorCodes = require("./userErrorCodes");
 
 const errors = {
     notFoundById: (id) => {
