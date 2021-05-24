@@ -1,15 +1,13 @@
 const { Router } = require('express');
 const UserService = require('../services/UserService');
-// const { createUserValid, updateUserValid } = require('../middlewares/user.validation.middleware');
+const { validation } = require('../middlewares/user.validation.middleware');
 const { responseMiddleware } = require('../middlewares/response.middleware');
-const generateError = require('../utils/generateError');
-const errors = require('../errors');
 const UserRepository = require('../repositories/UserRepository');
-const errorCodes = require('../errors/users/errorCodes');
+const errorCodes = require('../errors/users/userErrorCodes');
 
 const router = Router();
 
-router.post('/', async (req, res, next) => {
+router.post('/', validation.save, async (req, res, next) => {
     if(req.validationError) {
         next();
     }
