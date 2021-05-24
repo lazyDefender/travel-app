@@ -1,6 +1,5 @@
 const errors = require('../errors');
 const UserRepository = require('../repositories/UserRepository');
-const generateError = require('../utils/generateError');
 
 class UserService {
 

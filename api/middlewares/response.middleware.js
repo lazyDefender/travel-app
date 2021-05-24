@@ -1,6 +1,10 @@
 const responseMiddleware = (req, res, next) => {
-    if(req.validationError) {
-       return res.status(400).json(req.validationError);
+    if(req.validationErrors) {
+        const body = {
+            errors: req.validationErrors,
+        };
+
+        return res.status(400).json(body);
     }
     if(req.result) {
         const {
