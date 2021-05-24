@@ -2,15 +2,33 @@ const firebase = require('firebase-admin');
 const collections = require('../collections');
 class UserRepository {
     static async create(newUser) {
+        const { 
+            authID,
+            firstName,
+            lastName,
+            email,
+        } = newUser;
+
         const { id } = await firebase
             .firestore()
             .collection(collections.USERS)
-            .add(newUser);
+            .add({
+                authIDs: [authID],
+                firstName,
+                lastName,
+                email,
+            });
+
+        const userDoc = await firebase
+            .firestore()
+            .collection(collections.USERS)
+            .doc(id)
+            .get();
 
         const user = {
             id,
-            ...newUser,
-        };
+            ...userDoc.data(),
+        }
 
         return user;
     }

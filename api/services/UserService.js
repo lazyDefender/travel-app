@@ -61,7 +61,24 @@ class UserService {
     }
 
     static async delete(id) {
-        await UserRepository.delete(id);
+        
+
+        const user = await UserRepository.getById(id);
+
+        if(user) {
+            await UserRepository.delete(id);
+            return {
+                data: null,
+                error: null,
+            }
+        }
+
+        else {
+            return {
+                data: null,
+                error: errors.USERS.notFoundById(id),
+            }    
+        }
     }
 }
 

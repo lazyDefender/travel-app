@@ -2,8 +2,6 @@ const { Router } = require('express');
 const UserService = require('../services/UserService');
 const validation = require('../middlewares/validation/user.validation.middleware');
 const { responseMiddleware } = require('../middlewares/response.middleware');
-const UserRepository = require('../repositories/UserRepository');
-const errors = require('../errors');
 const errorCodes = require('../errors/errorCodes');
 const { validationResult } = require('express-validator');
 const validationError = require('../utils/validationError');
@@ -108,11 +106,23 @@ router.patch('/:id', validation.update, async (req, res, next) => {
 
 router.delete('/:id', async (req, res, next) => {
     const { id } = req.params;
-    const user = await UserRepository.getById(id);
-    if(user) {
-        await UserService.delete(id);
+
+    const { error } = await UserService.delete(id);
+
+    if(error && error.code === errorCodes.USERS.USER_NOT_FOUND_BY_ID) {
+        const body = {
+            errors: [error],
+        }
+
         req.result = {
-            status: 200,
+            body,
+            status: 404,
+        }
+    }
+
+    else {
+        req.result = {
+            status: 204,
         }
     }
     
