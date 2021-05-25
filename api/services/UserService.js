@@ -37,6 +37,21 @@ class UserService {
         };
     }
 
+    static async getByUid(uid) {
+        const user = await UserRepository.getByUid(uid);
+        if(!user) {
+            return {
+                data: null,
+                error: errors.USERS.notFoundByUid(uid),
+            };
+        }
+        
+        return {
+            data: user,
+            error: null,
+        };
+    }
+
     static async update(id, dataToUpdate) {
         const user = await UserRepository.getById(id);
         if(user) {

@@ -71,6 +71,27 @@ class UserRepository {
         return null;
     }
 
+    static async getByUid(uid) {
+        const usersQuerySnapshot = await firebase
+            .firestore()
+            .collection(collections.USERS)
+            .where('authIDs', 'array-contains', uid)
+            .get();
+
+        if(!usersQuerySnapshot.empty) {
+            const userDocumentSnapshot = usersQuerySnapshot.docs[0];
+            const userDoc = userDocumentSnapshot.data();
+            const user = {
+                id: userDocumentSnapshot.id,
+                ...userDoc,
+            }
+
+            return user;
+        }
+
+        return null;
+    }
+
     static async update(id, updatedUser) {
         const userRef = firebase
             .firestore()

@@ -8,6 +8,15 @@ const errors = {
         };
 
         return error;
+    },
+
+    notFoundByUid: (uid) => {
+        const error = {
+            code: errorCodes.USER_NOT_FOUND_BY_UID,
+            message: `User with uid '${uid}' does not exist`,
+        };
+
+        return error;
     }
 }
 

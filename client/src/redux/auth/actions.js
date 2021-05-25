@@ -94,6 +94,8 @@ export const authActions = Object.freeze({
             .auth()
             .signInWithEmailAndPassword(email, password)
 
+            console.log('authRes: ', authRes)
+
             const { uid } = authRes.user
             const userRes = await fire
                 .firestore()
@@ -111,6 +113,7 @@ export const authActions = Object.freeze({
             dispatch(authActions.fill(userData))
         }
         catch(e) {
+            console.log(e)
             dispatch(authActions.setFetchingError(e.code))
         }
 
@@ -171,6 +174,8 @@ export const authActions = Object.freeze({
         const provider = new firebase.auth.GoogleAuthProvider()
         provider.addScope('email')
         const result = await firebase.auth().signInWithPopup(provider)
+
+        console.log('google result: ', result)
         
         const {
             uid,

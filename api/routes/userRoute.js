@@ -32,11 +32,36 @@ router.post('/', validation.save, async (req, res, next) => {
 });
 
 router.get('/', async (req, res, next) => {
-    const { data: users } = await UserService.getAll();
-    req.result = {
-        status: 200,
-        body: users,
+    const { uid } = req.query;
+    if(uid) {
+        const { data: user, error } = await UserService.getByUid(uid);
+
+        if(error && error.code === errorCodes.USERS.USER_NOT_FOUND_BY_UID) {
+            const body = {
+                errors: [error],
+            }
+    
+            req.result = {
+                body,
+                status: 404,
+            }
+        }
+        else {
+            req.result = {
+                status: 200,
+                body: user,
+            }
+        }
     }
+    
+    else {
+        const { data: users } = await UserService.getAll();
+        req.result = {
+            status: 200,
+            body: users,
+        }
+    }
+    
     next();
 });
 
