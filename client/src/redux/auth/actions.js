@@ -175,8 +175,14 @@ export const authActions = Object.freeze({
         provider.addScope('email')
         const result = await firebase.auth().signInWithPopup(provider)
 
-        console.log('google result: ', result)
-        
+        const { currentUser } = await firebase.auth()
+
+        let token = null
+        if(currentUser) {
+            token = await currentUser.getIdToken()
+            console.log(token)
+        }
+
         const {
             uid,
         } = result.user
