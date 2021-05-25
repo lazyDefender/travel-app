@@ -1,5 +1,5 @@
 const userErrorCodes = require('./users/userErrorCodes');
-const cityErrorCodes = require('./users/cityErrorCodes');
+const cityErrorCodes = require('./cities/cityErrorCodes');
 
 const errorCodes = {
     USERS: userErrorCodes,

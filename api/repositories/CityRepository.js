@@ -4,12 +4,12 @@ class CityRepository {
     static async create(newCity) {
         const { id } = await firebase
             .firestore()
-            .collection(collection.CITIES)
+            .collection(collections.CITIES)
             .add(newCity);
 
         const cityDoc = await firebase
             .firestore()
-            .collection(collection.CITIES)
+            .collection(collections.CITIES)
             .doc(id)
             .get();
 
@@ -43,7 +43,7 @@ class CityRepository {
     static async getById(id) {
         const cityDoc = await firebase
             .firestore()
-            .collection(collection.CITIES)
+            .collection(collections.CITIES)
             .doc(id)
             .get();
 
@@ -62,7 +62,7 @@ class CityRepository {
     static async delete(id) {
         const cityRef = firebase
             .firestore()
-            .collection(collection.CITIES)
+            .collection(collections.CITIES)
             .doc(id);
 
         await cityRef.delete();
