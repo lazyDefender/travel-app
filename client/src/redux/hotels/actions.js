@@ -7,6 +7,7 @@ import { types } from './types';
 import fire from '../../firebase'
 import moment from 'moment';
 import { getPlace } from '../../global/getPlace';
+import axios from 'axios'
 
 export const hotelActions = Object.freeze({
     //Sync
@@ -41,24 +42,17 @@ export const hotelActions = Object.freeze({
     //Async
     fetchById: (id) => async (dispatch) => {
         dispatch(hotelActions.startFetching())
-        const hotelDoc = await fire
-            .firestore()
-            .collection('hotels')
-            .doc(id)
-            .get()
 
+        const hotelUrl = `${process.env.REACT_APP_API_URL}/hotels/${id}`
 
-        const hotel = {
-            id: hotelDoc.id,
-            ...hotelDoc.data(),
+        try {
+            const { data: hotel } = await axios.get(hotelUrl)
+            dispatch(hotelActions.fill(hotel))
+        }
+        catch(error) {
+            dispatch(hotelActions.setFetchingError(error.response.data.errors[0]))
         }
 
-        // const place = await getPlace(hotel.name)
-        const result = {
-            ...hotel,
-            // ...place.candidates[0],
-        }
-        dispatch(hotelActions.fill(result))
         dispatch(hotelActions.stopFetching())
     },
 })

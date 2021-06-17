@@ -32,7 +32,7 @@ class HotelService {
         }
         
         return {
-            data: user,
+            data: hotel,
             error: null,
         };
     }

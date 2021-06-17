@@ -12,9 +12,9 @@ import Progress from '../../global/components/Progress'
 
 const Hotel = () => {
     let { id } = useParams();
-    const {data, isFetching} = useHotel(id)
+    const { data, isFetching, error } = useHotel(id)
     const tours = useToursByHotel(id)
-    const hotelJSX = <>
+    const hotelJSX = error ? <h1>Готель не знайдено</h1> : <>
         <HotelMain hotel={data}/>
         <HotelsToursList tours={tours}/>
         {/* <GoogleMap location={data?.geometry.location}/> */}
