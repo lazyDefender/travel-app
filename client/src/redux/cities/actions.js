@@ -4,6 +4,7 @@ import { api } from '../../api';
 import { types } from './types';
 // Fire
 import fire from '../../firebase'
+import axios from 'axios';
 
 export const citiesActions = Object.freeze({
     //Sync
@@ -38,17 +39,10 @@ export const citiesActions = Object.freeze({
 
     fetchAsync: (id) => async (dispatch) => {
         dispatch(citiesActions.startFetching())
-        const citiesResponse = await fire
-            .firestore()
-            .collection('cities')
-            .get()
-        const citiesDocs = citiesResponse.docs
-        const cities = citiesDocs.map(doc => {
-            return {
-                id: doc.id,
-                ...doc.data(),
-            }
-        })
+        
+        const citiesUrl = `${process.env.REACT_APP_API_URL}/cities`
+        const { data: cities } = await axios.get(citiesUrl)
+
         const citiesSorted = cities.sort((cityA, cityB) => cityA.name > cityB.name ? 1 : -1)
         dispatch(citiesActions.fill(citiesSorted))
         dispatch(citiesActions.stopFetching())
