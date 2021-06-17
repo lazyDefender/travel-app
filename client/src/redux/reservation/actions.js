@@ -3,6 +3,7 @@ import { types } from './types';
 // Fire
 import fire from '../../firebase'
 import moment from 'moment';
+import axios from 'axios';
 
 export const reservationActions = Object.freeze({
     //Sync
@@ -35,57 +36,13 @@ export const reservationActions = Object.freeze({
 
     //Async
     fetchTour: (tourId) => async (dispatch) => {
-        const tourRes = await fire
-            .firestore()
-            .collection('tours')
-            .doc(tourId)
-            .get()
-        const tour = {
-            id: tourRes.id,
-            ...tourRes.data(),
-        }
+        dispatch(reservationActions.startFetching())
 
-        const hotelRes = await fire
-            .firestore()
-            .collection('hotels')
-            .doc(tour.hotel.id)
-            .get()
-        const hotel = {
-            id: hotelRes.id,
-            ...hotelRes.data(),
-        }
-        const cityRes = await fire
-            .firestore()
-            .collection('cities')
-            .doc(tour.toCity.id)
-            .get()
-        
-        const toCity = {
-            id: cityRes.id,
-            ...cityRes.data(),
-        }
+        const tourUrl = `${process.env.REACT_APP_API_URL}/tours/${tourId}`
+        const { data: tour } = await axios.get(tourUrl)
 
-        const bookedDaysRes = await fire
-            .firestore()
-            .collection('orders')
-            .where('tour', '==', tourRes.ref)
-            .get()
-        const bookedDaysDocs = bookedDaysRes.docs
-        const bookedDays = bookedDaysDocs.map(item => {
-            const { datetime } = item.data()
-            const jsDate = datetime.toDate()
-            return  moment(jsDate)
-            
-        })
-
-        const result = {
-            ...tour,
-            hotel,
-            toCity,
-            bookedDays,
-        }
-
-        dispatch(reservationActions.fill(result))
+        dispatch(reservationActions.fill(tour))
+        dispatch(reservationActions.stopFetching())
     },
 
     saveOrderAsync: (order) => async (dispatch) => {
