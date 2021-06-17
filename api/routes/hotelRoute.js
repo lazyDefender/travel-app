@@ -1,6 +1,6 @@
 const { Router } = require('express');
-const CityService = require('../services/CityService');
-const validation = require('../middlewares/validation/city.validation.middleware');
+const HotelService = require('../services/HotelService');
+const validation = require('../middlewares/validation/hotel.validation.middleware');
 const errorCodes = require('../errors/errorCodes');
 const { validationResult } = require('express-validator');
 const validationError = require('../utils/validationError');
@@ -21,10 +21,10 @@ router.post('/', validation.save, async (req, res, next) => {
     }
 
     else {
-        const { data: createdCity, error } = await CityService.create(req.body);
+        const { data: createdHotel, error } = await HotelService.create(req.body);
         req.result = {
             status: 201,
-            body: createdCity,
+            body: createdHotel,
         };
         
         next(); 
@@ -32,10 +32,10 @@ router.post('/', validation.save, async (req, res, next) => {
 });
 
 router.get('/', async (req, res, next) => {
-    const { data: cities } = await CityService.getAll();
+    const { data: hotels } = await HotelService.getAll();
     req.result = {
         status: 200,
-        body: cities,
+        body: hotels,
     }
     
     next();
@@ -43,9 +43,9 @@ router.get('/', async (req, res, next) => {
 
 router.get('/:id', async (req, res, next) => {
     const { id } = req.params;  
-    const { data: city, error } = await CityService.getById(id);
+    const { data: hotel, error } = await HotelService.getById(id);
 
-    if(error && error.code === errorCodes.CITIES.CITY_NOT_FOUND_BY_ID) {
+    if(error && error.code === errorCodes.HOTELS.HOTEL_NOT_FOUND_BY_ID) {
         const body = {
             errors: [error],
         }
@@ -59,7 +59,7 @@ router.get('/:id', async (req, res, next) => {
     else {
         req.result = {
             status: 200,
-            body: city,
+            body: hotel,
         }
     }
      
@@ -68,9 +68,9 @@ router.get('/:id', async (req, res, next) => {
 
 router.delete('/:id', async (req, res, next) => {
     const { id } = req.params;
-    const { error } = await CityService.delete(id);
+    const { error } = await HotelService.delete(id);
 
-    if(error && error.code === errorCodes.CITIES.CITY_NOT_FOUND_BY_ID) {
+    if(error && error.code === errorCodes.HOTELS.HOTEL_NOT_FOUND_BY_ID) {
         const body = {
             errors: [error],
         }

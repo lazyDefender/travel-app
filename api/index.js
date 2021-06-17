@@ -19,7 +19,7 @@ app.use(responseMiddleware);
 
 const port = 3050;
 app.listen(process.env.PORT || port, () => {
-    console.log('started!');
+    console.log(`started on port ${port}`);
 });
 
 exports.app = app;
