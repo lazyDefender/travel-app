@@ -56,6 +56,42 @@ class TourRepository {
         }
         return result;
     }
+
+    static async getByHotel(hotelId) {
+        const hotelRef = await firebase
+            .firestore()
+            .collection(collections.HOTELS)
+            .doc(hotelId)
+
+        const toursRes = await firebase
+            .firestore()
+            .collection(collections.TOURS)
+            .where('hotel', '==', hotelRef)
+            .get()
+        
+        const toursDocs = toursRes.docs
+        const tours = []
+        for(const t of toursDocs) {
+            const tour = t.data()
+            const toCityDoc = await tour.toCity.get()
+            const toCity = toCityDoc.data()
+            const { 
+                adultPrice, 
+                kidPrice, 
+                duration,
+            } = tour
+
+            tours.push({
+                id: t.id,
+                adultPrice,
+                kidPrice,
+                duration,
+                toCity,
+            })
+        }
+
+        return tours
+    }
 }
 
 module.exports = TourRepository;

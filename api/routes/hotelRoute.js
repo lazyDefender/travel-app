@@ -66,6 +66,31 @@ router.get('/:id', async (req, res, next) => {
     next();
 });
 
+router.get('/:id/tours', async (req, res, next) => {
+    const { id } = req.params;
+    const { data: tours, error } = await HotelService.getToursByHotel(id);
+
+    if(error && error.code === errorCodes.HOTELS.HOTEL_NOT_FOUND_BY_ID) {
+        const body = {
+            errors: [error],
+        }
+
+        req.result = {
+            body,
+            status: 404,
+        }
+    }
+
+    else {
+        req.result = {
+            status: 200,
+            body: tours,
+        }
+    }
+
+    next();
+})
+
 router.delete('/:id', async (req, res, next) => {
     const { id } = req.params;
     const { error } = await HotelService.delete(id);

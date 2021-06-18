@@ -1,5 +1,6 @@
 const errors = require('../errors');
 const HotelRepository = require('../repositories/HotelRepository');
+const TourRepository = require('../repositories/TourRepository');
 
 class HotelService {
     static async create(hotel) {
@@ -35,6 +36,15 @@ class HotelService {
             data: hotel,
             error: null,
         };
+    }
+
+    static async getToursByHotel(id) {
+        const tours = await TourRepository.getByHotel(id);
+
+        return {
+            data: tours,
+            error: null,
+        }
     }
 
     static async update(id, dataToUpdate) {
