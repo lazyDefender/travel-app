@@ -4,7 +4,7 @@ const errorCodes = require('../errors/errorCodes');
 const UserService = require('./UserService');
 
 class AuthService {
-    static async verifyToken(rawToken) {
+    static async verifyToken(rawToken = '') {
         const token = rawToken.split(' ')[1];
         try {
             const { uid } = await firebase

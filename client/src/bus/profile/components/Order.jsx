@@ -2,17 +2,14 @@ import React from 'react'
 import {
     Typography,
     Card,
-    CardActions,
     CardMedia,
     CardActionArea,
     CardContent,
-    Button,
 } from '@material-ui/core'
 import { Link } from 'react-router-dom'
 import moment from 'moment'
 
 import { book } from '../../../navigation/book'
-import { getPhotoUri } from '../../../global/getPhotoUri'
 
 const Order = (props) => {
     const { 
@@ -32,6 +29,8 @@ const Order = (props) => {
       adultPrice,
     } = tour
     const total = kidPrice * kidsCount + adultPrice * adultsCount 
+
+    const date = new Date(datetime.seconds * 1000)
     
     return <>
         <Link to={`${book.hotels}/${id}`}>
@@ -55,7 +54,7 @@ const Order = (props) => {
                   К-сть дітей - {kidsCount}
                 </Typography>
                 <Typography variant="body2" color="textSecondary" component="p">
-                  Початок туру - {moment(datetime.toDate()).format('DD-MM-yyyy')}
+                  Початок туру - {moment(date).format('DD-MM-yyyy')}
                 </Typography>
                 <Typography variant="body2" color="textSecondary" component="p">
                   Тривалість туру - {duration} дн.

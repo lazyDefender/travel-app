@@ -1,9 +1,9 @@
 // Types
 import { types } from './types';
 // Fire
-import fire from '../../firebase'
+import firebase from 'firebase'
 import moment from 'moment';
-import axios from 'axios';
+import axios from 'axios'
 
 export const reservationActions = Object.freeze({
     //Sync
@@ -47,37 +47,19 @@ export const reservationActions = Object.freeze({
 
     saveOrderAsync: (order) => async (dispatch) => {
         dispatch(reservationActions.startFetching())
-        const {
-            adultsCount,
-            kidsCount,
-            datetime,
-            tourId,
-            userId,
-        } = order
 
-        console.log('order:', order)
+        const token = await firebase
+            .auth()
+            .currentUser
+            .getIdToken()
+        
+        const orderUrl = `${process.env.REACT_APP_API_URL}/orders`
+        const { data: createdOrder } = await axios.post(orderUrl, order, {
+            headers: {
+                'Authorization': `Bearer ${token}`,
+            }
+        })
 
-        const userRef = await fire
-            .firestore()
-            .collection('users')
-            .doc(userId)
-        const tourRef = await fire
-            .firestore()
-            .collection('tours')
-            .doc(tourId)
-
-        const fullOrder = {
-            adultsCount,
-            kidsCount,
-            datetime: typeof datetime.toDate === 'function' ? datetime.toDate() : datetime,
-            tour: tourRef,
-            user: userRef,
-        }
-
-        const ordersRes = await fire
-            .firestore()
-            .collection('orders')
-            .add(fullOrder)
         dispatch(reservationActions.stopFetching())
     }
 
